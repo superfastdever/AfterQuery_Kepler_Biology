@@ -31,9 +31,25 @@ jobs_dir="$ROOT/build/harbor-jobs"
 mkdir -p "$jobs_dir"
 
 # Structure first: no point burning a container build on a bundle that would be
-# rejected at submit.
+# rejected at submit. This always runs against the REAL bundle.
 printf '== structure check ==\n'
 python3 "$ROOT/tools/structure-check.py" "$task" || die "structure check failed"
+
+# Some sandboxes intercept TLS, which breaks `pip install` inside Docker
+# builds. Harbor must then run against a CA-patched copy; the real bundle stays
+# clean. See tools/_local_ca_patch.py.
+CA_BUNDLE="${CCR_CA_BUNDLE:-/root/.ccr/ca-bundle.crt}"
+run_target="$task"
+if [ -f "$CA_BUNDLE" ]; then
+  printf '\n== local TLS proxy detected ==\n'
+  patched="$ROOT/build/.local-validation/$(basename "$task")"
+  python3 "$ROOT/tools/_local_ca_patch.py" "$task" "$patched" --ca "$CA_BUNDLE" \
+    || die "could not prepare the local validation copy"
+  run_target="$patched"
+  printf 'Running harbor against the patched copy at build/.local-validation/.\n'
+  printf 'The committed bundle is unmodified. Re-validate on a machine without\n'
+  printf 'a TLS-intercepting proxy before trusting this as a final gate.\n'
+fi
 
 # Read the reward harbor wrote for the most recent job.
 reward_of() {
@@ -48,7 +64,7 @@ run_agent() {
   local agent="$1" expected="$2" job
   job="$jobs_dir/$(basename "$task")-$agent-$(date +%s)"
   printf '\n== %s run (expecting reward %s) ==\n' "$agent" "$expected"
-  harbor run -p "$task" -a "$agent" -e docker -o "$job" -y >"$job.log" 2>&1
+  harbor run -p "$run_target" -a "$agent" -e docker -o "$job" -y >"$job.log" 2>&1
   local status=$? actual
   actual="$(reward_of "$job")"
   if [ -z "$actual" ]; then

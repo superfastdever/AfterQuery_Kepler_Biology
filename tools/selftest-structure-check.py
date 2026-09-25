@@ -149,7 +149,7 @@ MUTATIONS: list[tuple[str, callable, str]] = [
 
     ("task name not under afterquery/",
      lambda d: patch(d / "task.toml",
-                     'name = "afterquery/TODO-slug"', 'name = "me/my-task"'),
+                     'name = "afterquery/UNSET-slug"', 'name = "me/my-task"'),
      "task.toml"),
 ]
 
