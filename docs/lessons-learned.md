@@ -53,3 +53,11 @@ Things learned building these, beyond what the platform guidance says.
   the verifier still leaves `artifacts/` behind in the job directory. When a
   verifier claims a file is missing, look there first to see what the agent
   actually produced.
+- **The difficulty probe cannot be run locally.** `harbor run -a oracle` and
+  `-a nop` need no model credentials; running a frontier agent against the task
+  does. So the solve band (≥1 and ≤7 of 8) is never measured before
+  submission — it is argued. Write `difficulty_explanation` as an argument, and
+  treat the platform's probe as the first real measurement.
+- In a cloud dev container, `dockerd` may simply not be running. Starting it is
+  often all that stands between "validation is impossible here" and a working
+  local gate. Check before concluding validation has to happen elsewhere.
