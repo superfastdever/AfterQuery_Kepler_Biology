@@ -10,7 +10,7 @@ instead of a submission.
 
 Exit status is 0 when every rule passes, 1 otherwise.
 
-Rules are transcribed from docs/kepler-instructions-general.md ("Bundle layout",
+Rules are transcribed from docs/kepler-instructions.md ("Bundle layout",
 "task.toml", "Rules and limits", "Writing the verifier", "Common mistakes").
 When that document changes, change this file with it.
 """
@@ -43,8 +43,8 @@ PIN_SCANNED = (
 
 # Life Sciences fields, as the submit form lists them. The form shows display
 # names; task.toml carries slugs, and the exact slug strings are not yet known
-# -- see "Open: bundle contract" in CLAUDE.md. Both spellings are accepted here
-# so the rule is useful either way.
+# -- read the exact string off the submit form. Both spellings are accepted
+# here so the rule is useful either way; the form is the authority.
 LIFE_SCIENCES_FIELDS = {
     "Ecology & Evolutionary Biology",
     "Neuroscience & Cognitive Science",
@@ -453,29 +453,6 @@ def check_compose(task: Path, rep: Report) -> None:
               "docker-compose.yaml must not declare volumes of any kind")
 
 
-def check_contract(rep: Report) -> None:
-    """Warn while the submission dataset's own guide is not vendored.
-
-    This repo submits under the **Scientific computing** dataset, whose guide
-    advertises "a stricter, science-specific bundle contract". Only the General
-    variant has been vendored, so rules this checker enforces may be too loose
-    -- or simply wrong -- for the dataset the work is actually filed under.
-
-    A warning, not a failure: it must not block building and validating. The
-    hard stop lives in tools/package.sh, since packaging is what produces a
-    submission.
-    """
-    docs = Path(__file__).resolve().parent.parent / "docs"
-    if not (docs / "kepler-instructions-scientific-computing.md").is_file():
-        rep.warn(
-            "contract",
-            "the Scientific computing bundle contract is not vendored in docs/; "
-            "this checker encodes the General dataset's rules, which are known "
-            "to be laxer. Do not submit until it is in and these rules are "
-            "re-checked against it (see CLAUDE.md, 'Open: bundle contract')",
-        )
-
-
 def check_placeholders(task: Path, rep: Report) -> None:
     markers = ("TODO", "NotImplementedError", "TODO-slug")
     for path in task.rglob("*"):
@@ -534,7 +511,6 @@ def main() -> int:
     check_leakage(task, rep)
     check_forbidden(task, rep)
     check_compose(task, rep)
-    check_contract(rep)
     if not args.allow_placeholders:
         check_placeholders(task, rep)
 

@@ -3,11 +3,6 @@
 Work through this before submitting. It is ordered by the pipeline stage that
 would catch each item, so a failure here is a failure there.
 
-> ⚠ This checklist is derived from the **General** dataset's guide. This repo
-> submits under **Scientific computing**, whose contract is stricter and is not
-> yet vendored. Re-read this list against that contract before trusting it.
-> See "Open: bundle contract" in `CLAUDE.md`.
-
 ## 0. Before writing any code
 
 - [ ] The specific **agent failure mode** is written down. Not "it's hard" —

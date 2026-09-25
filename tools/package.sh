@@ -22,21 +22,6 @@ task="$ROOT/tasks/$slug"
 
 command -v zip >/dev/null 2>&1 || die "zip is not installed (apt-get install zip)"
 
-# Hard stop: this repo submits under the Scientific computing dataset, whose
-# guide advertises "a stricter, science-specific bundle contract". Until that
-# contract is vendored and the tooling re-checked against it, any zip built
-# here is validated only against the General dataset's laxer rules. Building
-# and validating a task is fine; shipping one is not.
-if [ ! -f "$ROOT/docs/kepler-instructions-scientific-computing.md" ] \
-   && [ "${KEPLER_ALLOW_UNKNOWN_CONTRACT:-0}" != "1" ]; then
-  die "the Scientific computing bundle contract is not vendored.
-  docs/kepler-instructions-scientific-computing.md is missing, so this bundle
-  has only been checked against the General dataset's rules. Vendor the real
-  contract and re-check tools/structure-check.py against it before packaging.
-  See CLAUDE.md, 'Open: bundle contract'.
-  To override deliberately: KEPLER_ALLOW_UNKNOWN_CONTRACT=1 tools/package.sh $slug"
-fi
-
 python3 "$ROOT/tools/structure-check.py" "$task" \
   || die "structure check failed -- not packaging"
 

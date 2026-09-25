@@ -6,22 +6,16 @@ a benchmark of hard, real computer work that current AI agents cannot do yet.
 Each task is a self-contained [harbor](https://harborframework.com/docs/tasks)
 bundle: a written brief, a containerized environment, a reference solution, and
 a sealed verifier that scores an attempt 0 or 1. Tasks are filed under the
-**Life Sciences** domain of the **Scientific computing** dataset, with a
-`field` and a free-text `subfield`.
+**Life Sciences** domain, with a `field` and a free-text `subfield`.
 
 Read `CLAUDE.md` before contributing — it carries the rules that govern this
 repo, including who writes `instruction.md` and which fields are in scope.
-
-> ⚠ **The Scientific computing bundle contract is not yet vendored.** Only the
-> General dataset's guide is in `docs/`, and the tooling encodes its laxer
-> rules. `tools/package.sh` refuses to build a submission zip until that is
-> fixed. See "Open: bundle contract" in `CLAUDE.md`.
 
 ## Layout
 
 | Path | Purpose |
 | --- | --- |
-| `docs/kepler-instructions-general.md` | Platform guidance for the **General** dataset, vendored verbatim. **Do not edit.** Not the contract this repo submits under. |
+| `docs/kepler-instructions.md` | Platform guidance, vendored verbatim. Defines workflow, bundle structure and validation — not subject scope. **Do not edit.** |
 | `docs/authoring-checklist.md` | Gate-by-gate checklist to work through before submitting. |
 | `docs/local-validation.md` | Running the gates locally, and sandbox quirks that get in the way. |
 | `docs/lessons-learned.md` | Failure modes already used, and feedback from past reviews. |

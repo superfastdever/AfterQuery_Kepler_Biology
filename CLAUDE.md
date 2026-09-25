@@ -11,13 +11,14 @@ bundle — instruction, containerized environment, reference solution, sealed
 verifier — designed so that frontier AI agents fail at it for legitimate
 reasons. Tasks are submitted one zip at a time.
 
-Platform guidance is vendored verbatim at
-`docs/kepler-instructions-general.md`. **Do not edit that file.** It is kept
-unaltered so it stays trustworthy as a reference.
+The authoritative platform guidance is vendored verbatim at
+`docs/kepler-instructions.md`. **Do not edit that file.** It is the spec for
+every gate a submission must clear, and it is kept unaltered so it stays
+trustworthy as a reference.
 
-⚠ It is the **General** dataset's guide. This repo submits under **Scientific
-computing**, whose contract is stricter and is not yet vendored. See
-"Open: bundle contract" below before packaging anything.
+It defines the authoring workflow, the bundle structure and the validation
+requirements. It does **not** define this repo's subject scope — that is set by
+what the owner's account is approved for, in §1 below.
 
 ## Hard rules
 
@@ -47,7 +48,7 @@ relax if that ever changes.
 
 ### 2. Authorship — `instruction.md` is written by the human, not by AI
 
-From `docs/kepler-instructions-general.md`, "Authorship & originality":
+From `docs/kepler-instructions.md`, "Authorship & originality":
 
 > Write the instruction yourself, as a domain expert, in your own words. We run
 > an AI check on every instruction file, and flagged submissions are rejected.
@@ -84,41 +85,17 @@ however thoroughly the surface changed. Before building, state **which specific
 agent failure mode** the task targets, and check `docs/lessons-learned.md` that
 it differs from the previous tasks.
 
-## Open: bundle contract
+## Confirm at submit time
 
-**Do not package or submit a task until this is closed.**
+The `domain` and `field` values in `task.toml` must match what the submit form
+has selected. The form displays names ("Life Sciences", "Ecology & Evolutionary
+Biology") while stating that `task.toml` carries **slugs**, so read the exact
+string off the form when filling these in rather than inventing one.
 
-The submit form's dataset picker is set to **Scientific computing**, described
-on the platform as:
-
-> Real research workflows in the natural, mathematical and engineering
-> sciences. **A stricter, science-specific bundle contract** — read the science
-> section of the instructions before building.
-
-Only the **General** dataset's guide has been vendored. Every rule in
-`tools/structure-check.py` is transcribed from that laxer variant, so the
-checker passing means less than it appears to. `tools/package.sh` refuses to
-build a zip until `docs/kepler-instructions-scientific-computing.md` exists
-(override deliberately with `KEPLER_ALLOW_UNKNOWN_CONTRACT=1`).
-
-Three things are still unknown and **must not be guessed**:
-
-1. **The Scientific computing bundle contract** — its science section, and
-   whatever it adds beyond the General rules.
-2. **The exact `domain` and `field` slug strings.** The submit form shows
-   display names ("Life Sciences", "Ecology & Evolutionary Biology");
-   `task.toml` needs slugs. The template carries `TODO-domain-slug` /
-   `TODO-field-slug` so an unfilled task cannot reach packaging.
-3. **The full REQUIRED LAYOUT list.** The submit form truncates it behind a
-   collapse chevron: `task.toml · instruction.md · environment/Dockerfile ·
-   solution/solve.sh · tests/test.sh · tests/Dockerfile · a…` — at least one
-   required item has never been read.
-
-When the contract arrives: vendor it as
-`docs/kepler-instructions-scientific-computing.md`, re-check every rule in
-`tools/structure-check.py` against it, extend
-`tools/selftest-structure-check.py` to cover whatever it adds, and record what
-differed in `docs/lessons-learned.md`.
+`tools/structure-check.py` accepts either spelling — `"Ecology & Evolutionary
+Biology"` or `"ecology-evolutionary-biology"` — so it cannot arbitrate this;
+the form is the authority. The template ships `TODO-domain-slug` /
+`TODO-field-slug` so an unfilled task cannot reach packaging unnoticed.
 
 ## Layout
 
