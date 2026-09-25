@@ -1,0 +1,226 @@
+{
+  "status": "passed",
+  "check_count": 31,
+  "checks": [
+    {
+      "name": "all historical transition rows normalized",
+      "max_error": 2.220446049250313e-16,
+      "tolerance": 2e-14,
+      "passed": true
+    },
+    {
+      "name": "786 ecological rows checked against independent scalar expansion",
+      "max_error": 3.3306690738754696e-16,
+      "tolerance": 2e-14,
+      "passed": true
+    },
+    {
+      "name": "observation probability normalized for both surveys",
+      "max_error": 9.992007221626409e-16,
+      "tolerance": 2e-14,
+      "passed": true
+    },
+    {
+      "name": "missing survey and water are marginalized",
+      "max_error": 0.0,
+      "tolerance": 1e-14,
+      "passed": true
+    },
+    {
+      "name": "shared-weather observation scalar expansion",
+      "max_error": 1.734723475976807e-18,
+      "tolerance": 2e-14,
+      "passed": true
+    },
+    {
+      "name": "three-year forward likelihood versus 32768 state paths",
+      "max_error": 5.637851296924623e-18,
+      "tolerance": 1e-16,
+      "passed": true
+    },
+    {
+      "name": "selection probability versus 1024 state pairs",
+      "max_error": 3.3306690738754696e-16,
+      "tolerance": 1e-14,
+      "passed": true
+    },
+    {
+      "name": "robust MILP versus all 16 policies on independent fixture",
+      "max_error": 0.0,
+      "tolerance": 1e-12,
+      "passed": true
+    },
+    {
+      "name": "posterior joint normalized",
+      "max_error": 4.440892098500626e-16,
+      "tolerance": 1e-14,
+      "passed": true
+    },
+    {
+      "name": "0-basic branch masses normalized",
+      "max_error": 2.220446049250313e-16,
+      "tolerance": 2e-14,
+      "passed": true
+    },
+    {
+      "name": "0-basic certified optimization gap",
+      "max_error": -3.3306690738754696e-16,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "0-intensive branch masses normalized",
+      "max_error": 4.440892098500626e-16,
+      "tolerance": 2e-14,
+      "passed": true
+    },
+    {
+      "name": "0-intensive certified optimization gap",
+      "max_error": 1.1102230246251565e-16,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "1-basic branch masses normalized",
+      "max_error": 2.220446049250313e-16,
+      "tolerance": 2e-14,
+      "passed": true
+    },
+    {
+      "name": "1-basic certified optimization gap",
+      "max_error": 1.1102230246251565e-16,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "1-intensive branch masses normalized",
+      "max_error": 2.220446049250313e-16,
+      "tolerance": 2e-14,
+      "passed": true
+    },
+    {
+      "name": "1-intensive certified optimization gap",
+      "max_error": -1.1102230246251565e-16,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "2-basic branch masses normalized",
+      "max_error": 4.440892098500626e-16,
+      "tolerance": 2e-14,
+      "passed": true
+    },
+    {
+      "name": "2-basic certified optimization gap",
+      "max_error": -3.3306690738754696e-16,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "2-intensive branch masses normalized",
+      "max_error": 2.220446049250313e-16,
+      "tolerance": 2e-14,
+      "passed": true
+    },
+    {
+      "name": "2-intensive certified optimization gap",
+      "max_error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "4-basic branch masses normalized",
+      "max_error": 4.440892098500626e-16,
+      "tolerance": 2e-14,
+      "passed": true
+    },
+    {
+      "name": "4-basic certified optimization gap",
+      "max_error": -1.1102230246251565e-16,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "4-intensive branch masses normalized",
+      "max_error": 4.440892098500626e-16,
+      "tolerance": 2e-14,
+      "passed": true
+    },
+    {
+      "name": "4-intensive certified optimization gap",
+      "max_error": 0.0,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "8-basic branch masses normalized",
+      "max_error": 2.220446049250313e-16,
+      "tolerance": 2e-14,
+      "passed": true
+    },
+    {
+      "name": "8-basic certified optimization gap",
+      "max_error": -3.3306690738754696e-16,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "8-intensive branch masses normalized",
+      "max_error": 2.220446049250313e-16,
+      "tolerance": 2e-14,
+      "passed": true
+    },
+    {
+      "name": "8-intensive certified optimization gap",
+      "max_error": 1.1102230246251565e-16,
+      "tolerance": 1e-09,
+      "passed": true
+    },
+    {
+      "name": "full chosen-policy forward path-risk versus backward calculation",
+      "max_error": 6.661338147750939e-16,
+      "tolerance": 2e-13,
+      "passed": true
+    },
+    {
+      "name": "already-collapsed mass remains collapsed",
+      "max_error": 2.220446049250313e-16,
+      "tolerance": 1e-14,
+      "passed": true
+    }
+  ],
+  "diagnostics": {
+    "posterior_L1_error_without_retention_correction": 0.4537731281522034,
+    "terminal_empty_probability_for_chosen_policy": [
+      0.7210523280219964,
+      0.8089232532075875,
+      0.7422510888483095
+    ],
+    "sustained_collapse_probability_for_chosen_policy": [
+      0.9019740026356555,
+      0.9019627898546355,
+      0.8944488652475051
+    ],
+    "clairvoyant_scenario_specific_lower_bound": 0.9017235726960916,
+    "nonanticipativity_gap": 0.00025042993956458925,
+    "branchwise_worst_joint_loss_policy_risks": [
+      0.9022479734686326,
+      0.9016373294681065,
+      0.8945605571936189
+    ],
+    "best_initial_choice": "4-intensive",
+    "distinct_second_stage_actions": 3,
+    "best_worst_risk": 0.9019740026356562,
+    "next_initial_choice_gap": 0.0005906910911906982
+  },
+  "elapsed_seconds": 0.5710895419997541,
+  "not_run": [
+    "Docker/Harbor oracle",
+    "Docker/Harbor nop",
+    "Harbor quality check",
+    "platform anti-cheat probe",
+    "frontier-agent difficulty trials",
+    "human review"
+  ],
+  "scope": "Local scientific prototype validation, not submission acceptance."
+}

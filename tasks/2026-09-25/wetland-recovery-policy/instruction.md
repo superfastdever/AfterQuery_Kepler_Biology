@@ -1,0 +1,13 @@
+A reserve needs a six-year recovery plan for a wetland population that is difficult to detect. There are four patches, and restoration can improve persistence without immediately repopulating an empty patch. The monitoring archive contains only networks that passed an early detection screen. Treating those records as an ordinary random sample would change the evidence for the ecological hypotheses and could change the recovery decision.
+
+Use the synthetic study in /app/input/model.json and /app/input/archive.json to choose the initial restoration and survey package, then specify which additional patches to restore for every possible result of the survey in year 3. The scientific model, archive sampling procedure, annual timing, budget, and future scenarios are defined in /app/input/protocol.md. The required file structures are in /app/input/output_schema.json. These four input files are the complete study specification; no external data or biological assumptions are needed.
+
+The objective is to minimize the worst scenario probability of two consecutive completely empty network censuses during years 0 through 6. Year 0 is the final historical census. A later recolonization does not undo an earlier collapse. Your plan must use the same observation-to-action table under all three future scenarios, respect the budget on every branch, and retain uncertainty about both the ecological hypothesis and the network state. A scenario is fixed for the whole future and is never disclosed to the manager.
+
+Save the joint current-state posterior and the archive retention probabilities to /app/output/posterior.json. Save the initial decision, all 32 second-stage decisions, and the resulting scenario risks to /app/output/policy.json. In /app/output/audit.json, supply the branch probabilities and joint collapse probabilities for every legal second-stage addition under all ten initial choices, as defined in the protocol. These quantities should make it possible to check the recommendation against the observation process and budget rather than accept a solver's success message.
+
+The environment supplies Python 3.12, NumPy 2.2.6, and SciPy 1.15.3. The sealed verifier evaluates the three JSON outputs. Do not rely on other files being retained.
+
+The protocol states the numerical acceptance criteria. In particular, reported risks must match independent evaluation of your submitted policy within 1e-6, and the policy's worst scenario risk must be within 1e-5 of the global optimum. Any admissible policy meeting that bound is acceptable. Choose your own computational approach and keep the calculation reproducible.
+
+You have 18000 seconds to complete this task.

@@ -13,7 +13,7 @@ change the idea.
 
 | Task | Field | Failure mode targeted | Source of difficulty | Verifier shape | Outcome |
 | --- | --- | --- | --- | --- | --- |
-| _(none yet)_ | | | | | |
+| `wetland-recovery-policy` | Ecology & Evolutionary Biology | Four shortcuts that each yield a complete, self-consistent, wrong answer: ignoring the archive's detection screen; factorizing dependent destination occupancies; scoring terminal emptiness instead of sustained collapse; optimizing per scenario instead of one common action table | Cross-domain expertise (occupancy modelling, selection-corrected likelihood, path-dependent risk, robust optimization) applied simultaneously | Recompute the submitted policy's risk from sealed arrays; accept any policy within 1e-5 of the optimum | Built and locally validated; not submitted |
 
 The **Field** column keeps coverage visible: the two thin fields (Ecology &
 Evolutionary Biology, Neuroscience & Cognitive Science) are where tasks are

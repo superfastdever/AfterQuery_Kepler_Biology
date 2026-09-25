@@ -1,0 +1,107 @@
+# Wetland recovery policy under a screened monitoring archive.
+#
+# Values marked OWNER must be supplied by the repo owner: they are factual
+# claims about a person, or a measurement nobody has taken yet. They are left
+# empty rather than invented, and the structure check fails while they are.
+artifacts = [
+    "/app/output/posterior.json",
+    "/app/output/policy.json",
+    "/app/output/audit.json",
+]
+
+[task]
+name = "afterquery/wetland-recovery-policy"
+description = "Choose a six-year wetland restoration and survey policy from a detection-screened monitoring archive, robust across three unobserved climate futures."
+
+[metadata]
+# --- OWNER: identity and declarations -------------------------------------
+author_name = ""
+author_email = ""
+author_organization = ""
+author_profile = ""
+conflicts_of_interest = ""
+
+# --- the three explanations reviewers read first ---------------------------
+difficulty_explanation = """
+Four requirements have to hold at once, and each has a plausible shortcut that
+silently changes the answer. The archive retains only networks that passed an
+early detection screen, so the likelihood needs a retention correction;
+omitting it moves the posterior hypothesis weights by an L1 distance of about
+0.454. Colonization depends on which source populations survived the
+intervening season, so destination occupancies are dependent once the surviving
+set is integrated out; multiplying four marginal occupancy probabilities is
+wrong. The failure event is two consecutive empty censuses anywhere in the
+six-year path, not emptiness at the final census; substituting the latter moves
+the risk by up to about 0.181. The manager never learns which climate scenario
+holds, so one observation-to-action table must serve all three futures;
+optimizing per scenario yields an unattainable bound about 0.00025 better than
+the valid minimax result, against a grading tolerance of 0.00001. Each of these
+produces a complete, internally consistent, confidently wrong answer.
+"""
+
+solution_explanation = """
+Build the exact 32-state process per hypothesis, with hydrology and a four-bit
+occupancy mask. Integrate the shared per-visit weather outside the product over
+patches, and marginalize the surviving-source subset before treating the next
+census as a distribution. Divide each retained record's likelihood by that
+hypothesis's retention probability to correct the screened archive, then form
+the joint posterior over hypothesis and current state. For the forecast, augment
+the ecological state with a three-valued record of whether the last census was
+empty and whether sustained collapse has already happened, keeping that flag
+absorbing while the ecological state continues to evolve. For each of the ten
+initial choices, enumerate the feasible second-stage additions and compute the
+joint probability of each observation branch together with collapse by year six.
+Then solve a small binary minimax program choosing one addition per observation
+code, with the worst scenario risk minimized and the same table used under all
+three futures.
+"""
+
+verification_explanation = """
+The verifier recomputes the submitted policy's risk from sealed reference
+arrays that the agent never sees, so reported risks and reported audit
+coefficients are never the source of truth. It enforces types, shapes, finite
+probabilities, strict JSON with no duplicate keys, posterior normalization,
+complete and unique observation codes, feasible added masks under the budget,
+and all ten audit roots with their branch masses and joint losses. A different
+policy is accepted whenever its worst-scenario risk is within 1e-5 of the
+optimum, so the reference answer is not privileged. The checker was exercised
+against nineteen cases: seventeen rejections including fabricated risks,
+conditional probabilities substituted for joint losses, and three complete
+alternative calculations from scientifically wrong models, plus two acceptances.
+"""
+
+# --- classification --------------------------------------------------------
+category = "Science"
+subcategory = "Biology"
+# OWNER: read the exact slugs off the submit form. Display names are
+# "Life Sciences" and "Ecology & Evolutionary Biology".
+domain = "TODO-domain-slug"
+field = "TODO-field-slug"
+subfield = "metapopulation ecology and conservation decision analysis"
+
+tags = ["ecology", "decision-analysis", "bayesian-inference", "optimization"]
+# OWNER: not measured. The reference calculation runs in under a second once
+# written, which says nothing about the time to derive it.
+expert_time_estimate_hours = 0
+relevant_experience = ""
+
+[verifier]
+# Measured and set after timing the verifier image.
+timeout_sec = 300.0
+environment_mode = "separate"
+
+[verifier.environment]
+# The verifier grades sealed artifacts and needs no network.
+network_mode = "no-network"
+
+[agent]
+# Matches the sentence in instruction.md exactly.
+timeout_sec = 18000.0
+
+[environment]
+network_mode = "public"
+build_timeout_sec = 900.0
+cpus = 4
+memory_mb = 4096
+storage_mb = 10240
+gpus = 0

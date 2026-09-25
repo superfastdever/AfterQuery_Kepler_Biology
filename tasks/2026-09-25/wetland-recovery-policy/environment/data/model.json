@@ -1,0 +1,306 @@
+{
+  "version": "1.0",
+  "synthetic": true,
+  "sites": [
+    "Alder",
+    "Birch",
+    "Cedar",
+    "Dogwood"
+  ],
+  "historical_hydrology": [
+    [
+      0.73,
+      0.27
+    ],
+    [
+      0.38,
+      0.62
+    ]
+  ],
+  "initial_hydrology": [
+    0.62,
+    0.38
+  ],
+  "initial_occupancy": [
+    [
+      0.42,
+      0.32,
+      0.36,
+      0.25
+    ],
+    [
+      0.16,
+      0.29,
+      0.14,
+      0.3
+    ]
+  ],
+  "survival": [
+    [
+      0.8,
+      0.53,
+      0.73,
+      0.49
+    ],
+    [
+      0.24,
+      0.61,
+      0.31,
+      0.66
+    ]
+  ],
+  "restoration_logodds": [
+    [
+      0.35,
+      1.0,
+      0.5,
+      0.85
+    ],
+    [
+      1.45,
+      0.4,
+      1.1,
+      0.45
+    ]
+  ],
+  "external_colonization": [
+    [
+      0.03,
+      0.02,
+      0.04,
+      0.015
+    ],
+    [
+      0.006,
+      0.018,
+      0.004,
+      0.022
+    ]
+  ],
+  "dispersal": [
+    [
+      0,
+      0.36,
+      0.12,
+      0.03
+    ],
+    [
+      0.14,
+      0,
+      0.25,
+      0.09
+    ],
+    [
+      0.06,
+      0.18,
+      0,
+      0.32
+    ],
+    [
+      0.03,
+      0.1,
+      0.21,
+      0
+    ]
+  ],
+  "weather_good_probability": [
+    0.76,
+    0.34
+  ],
+  "detection": [
+    [
+      0.74,
+      0.68,
+      0.79,
+      0.63
+    ],
+    [
+      0.29,
+      0.25,
+      0.34,
+      0.22
+    ]
+  ],
+  "false_positive": [
+    0.012,
+    0.035
+  ],
+  "intensive_detection": [
+    [
+      0.95,
+      0.93,
+      0.96,
+      0.92
+    ],
+    [
+      0.76,
+      0.71,
+      0.8,
+      0.69
+    ]
+  ],
+  "intensive_false_positive": [
+    0.003,
+    0.008
+  ],
+  "water_report_dry_probability": [
+    0.16,
+    0.83
+  ],
+  "hypotheses": [
+    {
+      "id": "M0",
+      "prior": 0.18,
+      "survival_shift": -0.25,
+      "dispersal_scale": 0.65,
+      "detection_shift": -0.2,
+      "initial_shift": -0.35
+    },
+    {
+      "id": "M1",
+      "prior": 0.16,
+      "survival_shift": -0.25,
+      "dispersal_scale": 1.35,
+      "detection_shift": 0.2,
+      "initial_shift": 0.25
+    },
+    {
+      "id": "M2",
+      "prior": 0.18,
+      "survival_shift": 0.2,
+      "dispersal_scale": 0.65,
+      "detection_shift": 0.2,
+      "initial_shift": -0.35
+    },
+    {
+      "id": "M3",
+      "prior": 0.16,
+      "survival_shift": 0.2,
+      "dispersal_scale": 1.35,
+      "detection_shift": -0.2,
+      "initial_shift": 0.25
+    },
+    {
+      "id": "M4",
+      "prior": 0.17,
+      "survival_shift": -0.05,
+      "dispersal_scale": 1.0,
+      "detection_shift": -0.35,
+      "initial_shift": 0.45
+    },
+    {
+      "id": "M5",
+      "prior": 0.15,
+      "survival_shift": 0.05,
+      "dispersal_scale": 1.0,
+      "detection_shift": 0.35,
+      "initial_shift": -0.45
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "early",
+      "first": [
+        [
+          0.56,
+          0.44
+        ],
+        [
+          0.24,
+          0.76
+        ]
+      ],
+      "second": [
+        [
+          0.86,
+          0.14
+        ],
+        [
+          0.65,
+          0.35
+        ]
+      ],
+      "survival_shift": [
+        -0.3,
+        0.3,
+        -0.35,
+        0.25
+      ]
+    },
+    {
+      "id": "late",
+      "first": [
+        [
+          0.89,
+          0.11
+        ],
+        [
+          0.67,
+          0.33
+        ]
+      ],
+      "second": [
+        [
+          0.36,
+          0.64
+        ],
+        [
+          0.12,
+          0.88
+        ]
+      ],
+      "survival_shift": [
+        0.05,
+        -0.65,
+        0.0,
+        -0.7
+      ]
+    },
+    {
+      "id": "persistent",
+      "first": [
+        [
+          0.7,
+          0.3
+        ],
+        [
+          0.4,
+          0.6
+        ]
+      ],
+      "second": [
+        [
+          0.7,
+          0.3
+        ],
+        [
+          0.4,
+          0.6
+        ]
+      ],
+      "survival_shift": [
+        -0.05,
+        -0.05,
+        -0.05,
+        -0.05
+      ]
+    }
+  ],
+  "project_cost": [
+    2,
+    3,
+    2,
+    3
+  ],
+  "survey_cost": {
+    "basic": 0,
+    "intensive": 1
+  },
+  "budget": 7,
+  "first_project_limit": 1,
+  "second_project_limit": 2,
+  "planning_years": 6,
+  "decision_year": 3,
+  "archive_selection": "At least one positive patch detection across both visits in years 0 and 1.",
+  "selection_prior_semantics": "Draw one hypothesis from the stated prior, then independently rejection-sample each complete network record until its selection event holds. No count of rejected records is observed."
+}

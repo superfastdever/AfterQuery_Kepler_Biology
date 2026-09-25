@@ -1,0 +1,120 @@
+{
+  "check_count": 19,
+  "checks": [
+    {
+      "name": "valid reference artifacts",
+      "expected_reward": 1,
+      "observed_reward": 1,
+      "passed": true
+    },
+    {
+      "name": "empty output directory",
+      "expected_reward": 0,
+      "observed_reward": 0,
+      "passed": true
+    },
+    {
+      "name": "files with empty objects",
+      "expected_reward": 0,
+      "observed_reward": 0,
+      "passed": true
+    },
+    {
+      "name": "numeric strings",
+      "expected_reward": 0,
+      "observed_reward": 0,
+      "passed": true
+    },
+    {
+      "name": "booleans as probabilities",
+      "expected_reward": 0,
+      "observed_reward": 0,
+      "passed": true
+    },
+    {
+      "name": "NaN",
+      "expected_reward": 0,
+      "observed_reward": 0,
+      "passed": true
+    },
+    {
+      "name": "duplicate JSON keys",
+      "expected_reward": 0,
+      "observed_reward": 0,
+      "passed": true
+    },
+    {
+      "name": "missing policy branch",
+      "expected_reward": 0,
+      "observed_reward": 0,
+      "passed": true
+    },
+    {
+      "name": "duplicate observation branch",
+      "expected_reward": 0,
+      "observed_reward": 0,
+      "passed": true
+    },
+    {
+      "name": "infeasible spending and repeated restoration",
+      "expected_reward": 0,
+      "observed_reward": 0,
+      "passed": true
+    },
+    {
+      "name": "do nothing after survey but claim optimal risks",
+      "expected_reward": 0,
+      "observed_reward": 0,
+      "passed": true
+    },
+    {
+      "name": "missing counterfactual audit root",
+      "expected_reward": 0,
+      "observed_reward": 0,
+      "passed": true
+    },
+    {
+      "name": "plausible but wrong joint loss",
+      "expected_reward": 0,
+      "observed_reward": 0,
+      "passed": true
+    },
+    {
+      "name": "omit archive selection correction",
+      "expected_reward": 0,
+      "observed_reward": 0,
+      "passed": true
+    },
+    {
+      "name": "conditional losses substituted for joint losses",
+      "expected_reward": 0,
+      "observed_reward": 0,
+      "passed": true
+    },
+    {
+      "name": "integrate shared survey weather separately for each patch",
+      "expected_reward": 0,
+      "observed_reward": 0,
+      "passed": true
+    },
+    {
+      "name": "factorize dependent destination occupancy after matching marginals",
+      "expected_reward": 0,
+      "observed_reward": 0,
+      "passed": true
+    },
+    {
+      "name": "optimize final emptiness instead of sustained collapse",
+      "expected_reward": 0,
+      "observed_reward": 0,
+      "passed": true
+    },
+    {
+      "name": "different feasible policy within stated tolerance",
+      "expected_reward": 1,
+      "observed_reward": 1,
+      "passed": true
+    }
+  ],
+  "scope": "Local artifact checks, not Harbor execution."
+}

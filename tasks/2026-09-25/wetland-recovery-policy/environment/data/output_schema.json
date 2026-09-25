@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "note": "Human-readable structural contract; this file is not a JSON Schema validator. Examples denote types, not scientific answers.",
+  "posterior.json": {
+    "selection_probability": "array[6] of numbers, one P(A|M) per hypothesis",
+    "hypothesis_weights": "array[6] of numbers, posterior after all six retained records",
+    "focal_joint": "array[6][32] of numbers, joint P(M,H_0,X_0 | archive), total sum 1"
+  },
+  "policy.json": {
+    "initial_restored_mask": "integer, one of 0,1,2,4,8",
+    "survey": "string, basic or intensive",
+    "second_stage": "array[32] of objects {observation_code: integer, added_mask: integer}",
+    "scenario_risk": "object {early: number, late: number, persistent: number}",
+    "worst_risk": "number, maximum scenario_risk"
+  },
+  "audit.json": {
+    "roots": "array[10] of objects described below, each initial choice appears exactly once",
+    "root_object": {
+      "initial_restored_mask": "integer, one of 0,1,2,4,8",
+      "survey": "string, basic or intensive",
+      "added_masks": "array of every feasible added mask, in ascending numeric order",
+      "scenarios": "object with keys early, late, persistent; each value is a scenario_object"
+    },
+    "scenario_object": {
+      "branch_probability": "array[32], indexed by observation_code",
+      "joint_collapse": "array[32][number of added_masks], indexed by observation_code then added_masks order"
+    }
+  }
+}

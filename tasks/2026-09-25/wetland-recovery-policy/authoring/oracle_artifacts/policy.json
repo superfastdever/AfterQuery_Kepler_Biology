@@ -1,0 +1,140 @@
+{
+  "initial_restored_mask": 4,
+  "survey": "intensive",
+  "second_stage": [
+    {
+      "observation_code": 0,
+      "added_mask": 8
+    },
+    {
+      "observation_code": 1,
+      "added_mask": 1
+    },
+    {
+      "observation_code": 2,
+      "added_mask": 2
+    },
+    {
+      "observation_code": 3,
+      "added_mask": 1
+    },
+    {
+      "observation_code": 4,
+      "added_mask": 8
+    },
+    {
+      "observation_code": 5,
+      "added_mask": 1
+    },
+    {
+      "observation_code": 6,
+      "added_mask": 2
+    },
+    {
+      "observation_code": 7,
+      "added_mask": 1
+    },
+    {
+      "observation_code": 8,
+      "added_mask": 8
+    },
+    {
+      "observation_code": 9,
+      "added_mask": 1
+    },
+    {
+      "observation_code": 10,
+      "added_mask": 2
+    },
+    {
+      "observation_code": 11,
+      "added_mask": 2
+    },
+    {
+      "observation_code": 12,
+      "added_mask": 8
+    },
+    {
+      "observation_code": 13,
+      "added_mask": 1
+    },
+    {
+      "observation_code": 14,
+      "added_mask": 2
+    },
+    {
+      "observation_code": 15,
+      "added_mask": 1
+    },
+    {
+      "observation_code": 16,
+      "added_mask": 8
+    },
+    {
+      "observation_code": 17,
+      "added_mask": 1
+    },
+    {
+      "observation_code": 18,
+      "added_mask": 2
+    },
+    {
+      "observation_code": 19,
+      "added_mask": 1
+    },
+    {
+      "observation_code": 20,
+      "added_mask": 8
+    },
+    {
+      "observation_code": 21,
+      "added_mask": 1
+    },
+    {
+      "observation_code": 22,
+      "added_mask": 2
+    },
+    {
+      "observation_code": 23,
+      "added_mask": 1
+    },
+    {
+      "observation_code": 24,
+      "added_mask": 8
+    },
+    {
+      "observation_code": 25,
+      "added_mask": 8
+    },
+    {
+      "observation_code": 26,
+      "added_mask": 2
+    },
+    {
+      "observation_code": 27,
+      "added_mask": 2
+    },
+    {
+      "observation_code": 28,
+      "added_mask": 8
+    },
+    {
+      "observation_code": 29,
+      "added_mask": 1
+    },
+    {
+      "observation_code": 30,
+      "added_mask": 2
+    },
+    {
+      "observation_code": 31,
+      "added_mask": 1
+    }
+  ],
+  "scenario_risk": {
+    "early": 0.9019740026356562,
+    "late": 0.9019627898546361,
+    "persistent": 0.8944488652475052
+  },
+  "worst_risk": 0.9019740026356562
+}
