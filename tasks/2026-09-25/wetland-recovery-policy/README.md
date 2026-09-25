@@ -61,10 +61,16 @@ answer is not privileged.
 
 ## Outstanding
 
-- `instruction.md` needs the repo owner's substantive authorship and is
-  currently missing the mandated closing sentence.
-- Owner-supplied metadata in `task.toml` is empty by design.
-- The `domain` and `field` slugs must be read off the submit form.
+Ten structure-check failures remain, all owner-supplied. See
+`authoring/owner-fields.md` for a paste-ready block.
+
+- Author identity, the conflicts-of-interest declaration, relevant experience
+  and the expert time estimate are empty by design, not by oversight.
+- The `domain` and `field` slugs must be read off the submit form; a guess
+  would trade a loud local failure for a silent rejection at submit.
+- `instruction.md` is structurally complete — the mandated closing sentence is
+  present and byte-verified — but the prose is still the AI-assisted draft and
+  needs the owner's substantive authorship.
 - No frontier-agent difficulty trial has been run; the solve band is argued,
   not measured.
 

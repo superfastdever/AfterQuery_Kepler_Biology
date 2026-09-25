@@ -10,4 +10,4 @@ The environment supplies Python 3.12, NumPy 2.2.6, and SciPy 1.15.3. The sealed 
 
 The protocol states the numerical acceptance criteria. In particular, reported risks must match independent evaluation of your submitted policy within 1e-6, and the policy's worst scenario risk must be within 1e-5 of the global optimum. Any admissible policy meeting that bound is acceptable. Choose your own computational approach and keep the calculation reproducible.
 
-You have 18000 seconds to complete this task.
+You have 18000 seconds to complete this task. Do not cheat by using online solutions or hints specific to this task.
