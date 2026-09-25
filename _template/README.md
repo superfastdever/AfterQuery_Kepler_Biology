@@ -3,7 +3,7 @@
 Copy this directory to start a new task:
 
 ```bash
-tools/new-task.sh <slug>     # creates tasks/<slug>/ from this template
+tools/new-task.sh <slug>     # creates tasks/<today>/<slug>/ from this template
 ```
 
 Slugs are lowercase, at most three hyphen-separated words. The directory name,
@@ -30,8 +30,8 @@ must all agree.
 ## Before submitting
 
 ```bash
-tools/structure-check.py tasks/<slug>   # replicates Kepler's submit-time gates
-tools/validate.sh tasks/<slug>          # oracle must be 1, nop must be 0
+tools/structure-check.py tasks/<date>/<slug>   # replicates Kepler's submit-time gates
+tools/validate.sh tasks/<date>/<slug>          # oracle must be 1, nop must be 0
 tools/package.sh <slug>                 # build/<slug>.zip
 ```
 

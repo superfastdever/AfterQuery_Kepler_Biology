@@ -19,22 +19,28 @@ repo, including who writes `instruction.md` and which fields are in scope.
 | `docs/authoring-checklist.md` | Gate-by-gate checklist to work through before submitting. |
 | `docs/local-validation.md` | Running the gates locally, and sandbox quirks that get in the way. |
 | `docs/lessons-learned.md` | Failure modes already used, and feedback from past reviews. |
+| `task_list.md` | **Index of every task**, ordered by creation time. Generated — do not hand-edit. |
 | `_template/` | The skeleton copied for each new task. |
-| `tasks/<slug>/` | One self-contained bundle per task. Zips independently. |
-| `tools/` | Scaffolding, local gates, packaging. |
+| `tasks/<date>/<slug>/` | One self-contained bundle per task, grouped by creation date. Zips independently. |
+| `tools/` | Scaffolding, local gates, packaging, indexing. |
 | `build/` | Generated zips and harbor job output. Gitignored. |
 
 ## Authoring a task
 
 ```bash
-tools/new-task.sh <slug>                # scaffold tasks/<slug>/ from _template
-tools/structure-check.py tasks/<slug>   # Kepler's submit-time gates, locally
-tools/validate.sh tasks/<slug>          # oracle must score 1, nop must score 0
-tools/package.sh <slug>                 # build/<slug>.zip, ready to submit
+tools/new-task.sh <slug>                      # scaffold tasks/<today>/<slug>/
+tools/structure-check.py tasks/<date>/<slug>  # Kepler's submit-time gates, locally
+tools/validate.sh tasks/<date>/<slug>         # oracle scores 1, nop scores 0
+tools/package.sh <slug>                       # build/<slug>.zip, ready to submit
 ```
 
-Slugs are lowercase and at most three hyphen-separated words. The directory
-name, `[task].name` and the name submitted on the platform must all agree.
+Slugs are lowercase and at most three hyphen-separated words, unique across all
+date folders. The directory name, `[task].name` and the name submitted on the
+platform must all agree.
+
+Tasks are grouped by creation date under `tasks/YYYY-MM-DD/`. The index at
+[`task_list.md`](task_list.md) is regenerated from that tree by
+`tools/task-list.py`, so it always matches what is on disk.
 
 Build in this order — it is not arbitrary:
 

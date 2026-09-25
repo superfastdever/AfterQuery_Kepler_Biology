@@ -5,7 +5,7 @@ Kepler rejects a bundle the moment it is submitted if any of these rules fail,
 and the rest of the pipeline never runs. Catching them here costs seconds
 instead of a submission.
 
-    tools/structure-check.py tasks/<slug>
+    tools/structure-check.py tasks/<date>/<slug>
     tools/structure-check.py --allow-placeholders _template
 
 Exit status is 0 when every rule passes, 1 otherwise.

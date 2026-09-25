@@ -100,24 +100,52 @@ the form is the authority. The template ships `TODO-domain-slug` /
 ## Layout
 
 ```
-docs/          platform guidance (verbatim), checklists, accumulated feedback
-_template/     the skeleton copied to start a new task — keep it valid
-tasks/<slug>/  one self-contained bundle per task; zips independently
-tools/         validation, scaffolding and packaging, shared by all tasks
-build/         generated zips (gitignored)
+task_list.md               generated index of every task — do not hand-edit
+docs/                      platform guidance (verbatim), checklists, feedback
+_template/                 the skeleton copied to start a new task
+tasks/<date>/<slug>/       one self-contained bundle per task
+tools/                     validation, scaffolding, packaging, indexing
+build/                     generated zips (gitignored)
 ```
 
-Nothing in `tasks/<slug>/` may depend on anything outside itself — the zip of
+Tasks are grouped by **creation date**, `tasks/YYYY-MM-DD/<slug>/`, so the tree
+stays readable as they accumulate. Slugs must be unique across every date
+folder — the slug is the submitted task name — and `tools/new-task.sh` refuses
+a duplicate.
+
+Nothing in a task directory may depend on anything outside itself: the zip of
 that directory's contents is the whole submission.
+
+### `task-meta.json` and `task_list.md`
+
+Each task carries a `task-meta.json` holding the repo-side facts the platform
+bundle has no field for: creation timestamp, status, completion date, a
+one-line summary, and the agent failure mode it targets. **It never ships** —
+`tools/package.sh` excludes it from the zip.
+
+`task_list.md` at the repo root is the index: a table of every task ordered by
+creation time, with per-task summaries below it. It is **generated** by
+`tools/task-list.py` from the contents of `tasks/`, never written by hand, so
+it cannot drift from reality. `new-task.sh` and `package.sh` refresh it
+automatically; run it yourself after editing a `task-meta.json`, and
+`tools/task-list.py --check` exits non-zero if it is stale.
+
+Status moves in one direction only:
+`building → validated → packaged → submitted → approved / rejected`.
 
 ## Workflow
 
 ```bash
-tools/new-task.sh <slug>              # scaffold tasks/<slug>/ from _template
-tools/structure-check.py tasks/<slug> # replicate Kepler's submit-time gates
-tools/validate.sh tasks/<slug>        # oracle must score 1, nop must score 0
-tools/package.sh <slug>               # build/<slug>.zip, ready to submit
+tools/new-task.sh <slug> [YYYY-MM-DD]    # scaffold tasks/<date>/<slug>/
+tools/structure-check.py tasks/<date>/<slug>
+tools/validate.sh tasks/<date>/<slug>    # oracle must be 1, nop must be 0
+tools/package.sh <slug>                  # build/<slug>.zip, ready to submit
+tools/task-list.py                       # regenerate task_list.md
 ```
+
+`package.sh` takes the bare slug and finds it under whichever date folder holds
+it. The date argument to `new-task.sh` defaults to today and exists for
+backdating.
 
 Slugs are lowercase and at most three hyphen-separated words. The directory
 name, `[task].name` (as `afterquery/<slug>`) and the submitted task name must

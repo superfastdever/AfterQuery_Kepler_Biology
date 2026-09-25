@@ -18,7 +18,7 @@ would catch each item, so a failure here is a failure there.
 
 ## 1. Structure check (instant, at submit)
 
-Run `tools/structure-check.py tasks/<slug>`. It covers all of these:
+Run `tools/structure-check.py tasks/<date>/<slug>`. It covers all of these:
 
 - [ ] `instruction.md`, `task.toml`, `environment/Dockerfile`,
       `solution/solve.sh`, `tests/test.sh`, `tests/Dockerfile` all present.
@@ -41,7 +41,7 @@ Run `tools/structure-check.py tasks/<slug>`. It covers all of these:
 
 ## 2. Reference verification
 
-Run `tools/validate.sh tasks/<slug>`, several times.
+Run `tools/validate.sh tasks/<date>/<slug>`, several times.
 
 - [ ] Oracle scores **exactly 1**, every run.
 - [ ] Nop scores **exactly 0**, every run.

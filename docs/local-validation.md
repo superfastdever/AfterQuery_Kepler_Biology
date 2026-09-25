@@ -13,9 +13,9 @@ docker info                 # the daemon must be running
 ## The three commands
 
 ```bash
-tools/structure-check.py tasks/<slug>   # submit-time gates, seconds
-tools/validate.sh tasks/<slug>          # oracle must be 1, nop must be 0
-tools/validate.sh tasks/<slug> --check  # adds harbor's LLM rubric review
+tools/structure-check.py tasks/<date>/<slug>   # submit-time gates, seconds
+tools/validate.sh tasks/<date>/<slug>          # oracle must be 1, nop must be 0
+tools/validate.sh tasks/<date>/<slug> --check  # adds harbor's LLM rubric review
 ```
 
 `validate.sh` runs the structure check first, then the oracle and nop runs. Run

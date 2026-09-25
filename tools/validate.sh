@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Run the two gates Kepler runs on the real harness.
 #
-#   tools/validate.sh tasks/<slug> [--check]
+#   tools/validate.sh tasks/<date>/<slug> [--check]
 #
 #   oracle -> solution/solve.sh stands in for the agent; must score exactly 1
 #   nop    -> nothing is done at all;                     must score exactly 0
@@ -18,7 +18,7 @@ export PATH="$HOME/.local/bin:$PATH"
 
 die() { printf 'error: %s\n' "$1" >&2; exit 1; }
 
-[ $# -ge 1 ] || die "usage: tools/validate.sh tasks/<slug> [--check]"
+[ $# -ge 1 ] || die "usage: tools/validate.sh tasks/<date>/<slug> [--check]"
 task="$(cd "$1" 2>/dev/null && pwd)" || die "no such directory: $1"
 shift
 run_rubric=0
