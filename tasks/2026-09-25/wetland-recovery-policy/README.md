@@ -11,6 +11,12 @@ ecology and conservation decision analysis.
 
 ## Difficulty
 
+> The protocol originally named all seven traps the verifier catches, five as
+> explicit "do not do X" instructions — the template's first rejection symptom.
+> Five hand-holds were removed while the generative model was left complete.
+> See `authoring/evidence/difficulty-analysis.md`; the answer, verifier and
+> gates are provably unchanged.
+
 Four scientific requirements hold simultaneously, and each has a shortcut that
 a careful generalist would take without noticing. What makes the task hard is
 not any one of them; it is that all four must be got right together, and three

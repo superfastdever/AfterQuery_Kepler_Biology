@@ -166,6 +166,15 @@ testable; both would fail the submission if decided wrongly.
 
 ---
 
+## Difficulty
+
+The protocol was found to name all seven traps the verifier catches, five of
+them as explicit instructions not to make the mistake — the template's first
+rejection symptom. Five hand-holds were removed and the generative model left
+complete. The answer is provably unmoved: six oracle runs across the change
+produce one artifact set, the mutation suite still returns 19/19, and the
+ablation ladder is byte-identical. See `difficulty-analysis.md`.
+
 ## Stated limits
 
 - **The solve band is argued, not measured.** No frontier-agent trial has run.
