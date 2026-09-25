@@ -11,6 +11,7 @@
     "survey": "string, basic or intensive",
     "second_stage": "array[32] of objects {observation_code: integer, added_mask: integer}",
     "scenario_risk": "object {early: number, late: number, persistent: number}",
+    "scenario_weights": "array[3] of numbers in scenario order early, late, persistent; non-negative and summing to 1",
     "worst_risk": "number, maximum scenario_risk"
   },
   "audit.json": {

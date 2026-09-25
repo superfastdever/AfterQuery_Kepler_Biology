@@ -105,6 +105,49 @@ rather than assumed:
 The task's answer, verifier, gates and evidence are all exactly as before. Only
 what the agent is told has changed.
 
+## Second pass: a structural hard point
+
+Removing the hand-holds restored four hard points, but each remained a
+*discovery* problem — short to implement once seen. Every quantity graded was
+also a by-product of the pipeline that produces the policy, so none of them
+could fail independently of it.
+
+What no part of that pipeline produces is evidence that the policy cannot be
+beaten. The reference called `milp` and trusted its dual bound; an agent could
+do the same. `policy.json` now also requires `scenario_weights`: a weighting of
+the three scenarios attaining the best bound implied by
+
+    L(w) = sum_o min_a sum_k w[k] C[k,o,a]
+
+checked against sealed coefficients at 1e-9.
+
+**The first design of this gate was wrong and was discarded.** It asked for a
+certificate of *optimality* — weights proving the submitted policy optimal.
+There is no such certificate here: the LP relaxation admits randomized
+policies, the protocol forbids randomization, and the resulting duality gap is
+**1.012e-05**, larger than the tolerance that gate would have needed. Grading on
+a tolerance wide enough to swallow the gap would have made the check weaker
+than the optimality gate already in place. The bound itself is exact and
+well-posed, so that is what is graded; the gap is the **price of determinism**,
+a real property of this instance.
+
+Measured, not assumed:
+
+- L* = 0.901963883450802, reproducible to 1e-12 across independent solves.
+- Unreachable by guessing: one-scenario weights fall 2.4e-04 short, uniform
+  2.5e-03, an even early/late split 4.4e-05. Perturbing the optimal weights by
+  1e-4 already loses 1.2e-08, so the 1e-9 gate demands a real solve.
+- **Orthogonal to every existing gate.** Three ablation routes — solver
+  answer with no certificate, one-scenario guess, uniform guess — have a
+  perfect posterior, a perfect audit and a zero optimality gap, and still fail.
+  Nothing else in the bundle catches them.
+- The mutation suite grew 19 to 25, covering an absent certificate, a negative
+  weight, weights not summing to one, and a certificate valid for a different
+  initial choice. The alternative-valid-policy acceptance still passes, so no
+  particular policy or certificate is privileged.
+- Regenerating the reference on Linux agrees with the author's macOS original
+  to **1.08e-15** across every sealed array, with an identical policy table.
+
 ## What this is not
 
 This is an argument about difficulty, not a measurement. No frontier agent has

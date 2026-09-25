@@ -1,5 +1,5 @@
 {
-  "optimum": 0.9019740026356562,
+  "optimum": 0.9019740026356561,
   "best_initial_choice": "4-intensive",
   "gate_tolerances": {
     "numeric_abs": 1e-06,
@@ -9,7 +9,7 @@
     "full reference": {
       "posterior_max_abs": 0.0,
       "audit_max_abs": 0.0,
-      "worst_risk": 0.9019740026356562,
+      "worst_risk": 0.9019740026356561,
       "optimality_gap": 0.0,
       "gate_posterior": "pass",
       "gate_audit": "pass",
@@ -18,10 +18,10 @@
       "reason": ""
     },
     "per-patch survey weather": {
-      "posterior_max_abs": 0.018773177230380245,
-      "audit_max_abs": 0.002201736995441572,
+      "posterior_max_abs": 0.01877317723037958,
+      "audit_max_abs": 0.0022017369954419053,
       "worst_risk": 0.9041138928872308,
-      "optimality_gap": 0.002139890251574572,
+      "optimality_gap": 0.002139890251574683,
       "gate_posterior": "FAIL",
       "gate_audit": "FAIL",
       "gate_optimality": "FAIL",
@@ -29,10 +29,10 @@
       "reason": "ValueError: Scientific numeric mismatch"
     },
     "factorized destination occupancy": {
-      "posterior_max_abs": 0.032164317935868394,
-      "audit_max_abs": 0.03701764805148422,
+      "posterior_max_abs": 0.032164317935868415,
+      "audit_max_abs": 0.03701764805148411,
       "worst_risk": 0.8591042098430665,
-      "optimality_gap": -0.042869792792589734,
+      "optimality_gap": -0.04286979279258962,
       "gate_posterior": "FAIL",
       "gate_audit": "FAIL",
       "gate_optimality": "pass",
@@ -40,10 +40,10 @@
       "reason": "ValueError: Scientific numeric mismatch"
     },
     "terminal emptiness, not sustained collapse": {
-      "posterior_max_abs": 1.7763568394002505e-15,
-      "audit_max_abs": 0.09224583725725477,
+      "posterior_max_abs": 0.0,
+      "audit_max_abs": 0.09224583725725471,
       "worst_risk": 0.7995253864178475,
-      "optimality_gap": -0.10244861621780865,
+      "optimality_gap": -0.10244861621780854,
       "gate_posterior": "pass",
       "gate_audit": "FAIL",
       "gate_optimality": "pass",
@@ -51,21 +51,21 @@
       "reason": "ValueError: Scientific numeric mismatch"
     },
     "no archive retention correction": {
-      "posterior_max_abs": 0.17516963577940772,
+      "posterior_max_abs": 0.17516963577940706,
       "audit_max_abs": 0.0,
-      "worst_risk": 0.9019740026356562,
+      "worst_risk": 0.9019740026356561,
       "optimality_gap": 0.0,
       "gate_posterior": "FAIL",
       "gate_audit": "pass",
       "gate_optimality": "pass",
       "verdict": "REJECT",
       "reason": "ValueError: Scientific numeric mismatch",
-      "posterior_L1": 0.4537731281522022
+      "posterior_L1": 0.4537731281522004
     },
     "worst case within each branch": {
       "posterior_max_abs": 0.0,
       "audit_max_abs": 0.0,
-      "worst_risk": 0.9022479734686326,
+      "worst_risk": 0.9022479734686325,
       "optimality_gap": 0.00027397083297642233,
       "gate_posterior": "pass",
       "gate_audit": "pass",
@@ -74,7 +74,7 @@
       "reason": "ValueError: Policy is outside optimality tolerance"
     },
     "scenario-specific (clairvoyant)": {
-      "worst_risk": 0.9017235726960916,
+      "worst_risk": 0.9017235726960915,
       "optimality_gap": -0.00025042993956458925,
       "gate_posterior": "n/a",
       "gate_audit": "n/a",
@@ -82,16 +82,49 @@
       "verdict": "NOT SUBMITTABLE",
       "reason": "requires one action table per scenario; the manager never learns the scenario",
       "per_scenario_risk": [
-        0.9017235726960916,
-        0.9015619206882339,
-        0.8944440436353104
+        0.9017235726960915,
+        0.9015619206882337,
+        0.8944440436353103
       ]
+    },
+    "solver answer, no certificate": {
+      "posterior_max_abs": 0.0,
+      "audit_max_abs": 0.0,
+      "worst_risk": 0.9019740026356561,
+      "optimality_gap": 0.0,
+      "gate_posterior": "pass",
+      "gate_audit": "pass",
+      "gate_optimality": "pass",
+      "verdict": "REJECT",
+      "reason": "KeyError: 'scenario_weights'"
+    },
+    "certificate guessed as one scenario": {
+      "posterior_max_abs": 0.0,
+      "audit_max_abs": 0.0,
+      "worst_risk": 0.9019740026356561,
+      "optimality_gap": 0.0,
+      "gate_posterior": "pass",
+      "gate_audit": "pass",
+      "gate_optimality": "pass",
+      "verdict": "REJECT",
+      "reason": "ValueError: Scenario weights do not attain the best available lower bound"
+    },
+    "certificate guessed as uniform": {
+      "posterior_max_abs": 0.0,
+      "audit_max_abs": 0.0,
+      "worst_risk": 0.9019740026356561,
+      "optimality_gap": 0.0,
+      "gate_posterior": "pass",
+      "gate_audit": "pass",
+      "gate_optimality": "pass",
+      "verdict": "REJECT",
+      "reason": "ValueError: Scenario weights do not attain the best available lower bound"
     },
     "naive: no second-stage restoration": {
       "posterior_max_abs": 0.0,
       "audit_max_abs": 0.0,
-      "worst_risk": 0.9142865891150225,
-      "optimality_gap": 0.012312586479366283,
+      "worst_risk": 0.9142865891150221,
+      "optimality_gap": 0.012312586479366061,
       "gate_posterior": "pass",
       "gate_audit": "pass",
       "gate_optimality": "FAIL",

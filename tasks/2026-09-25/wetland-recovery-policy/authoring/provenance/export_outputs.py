@@ -13,6 +13,7 @@ def format_outputs(summary,arrays):
         'policy.json':{'initial_restored_mask':b['restored'],'survey':b['survey'],
                        'second_stage':[{'observation_code':o,'added_mask':a} for o,a in enumerate(b['policy'])],
                        'scenario_risk':dict(zip(['early','late','persistent'],b['risk'])),
+                       'scenario_weights':b['scenario_weights'],
                        'worst_risk':b['worst_risk']},
         'audit.json':{'roots':[]}
     }

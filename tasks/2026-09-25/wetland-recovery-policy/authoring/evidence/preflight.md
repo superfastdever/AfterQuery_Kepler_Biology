@@ -65,7 +65,7 @@ suite.
 
 ### Mutation suite
 
-**19/19**, re-run after `authoring/` was reorganised, including the two
+**25/25**, re-run after `authoring/` was reorganised, including the two
 acceptances (the reference artifacts, and a *different* feasible policy inside
 the 1e-5 optimality tolerance) and the three wrong-model negative controls that
 emit internally consistent artifacts.

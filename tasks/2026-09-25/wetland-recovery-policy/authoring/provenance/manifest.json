@@ -4,14 +4,14 @@
   "files": {
     "Tasks/01-wetland-recovery/public/archive.json": "3f49c882ceb1d90d554ee16efc7e1f20364bccad82a705117e869afe6bc8d18d",
     "Tasks/01-wetland-recovery/public/model.json": "32f89422d274f555f4cfaf0a42ce8c2f6367410dda47bf76ff8e1c4d0ababf26",
-    "Tasks/01-wetland-recovery/public/output_schema.json": "93896a3aed28b8c65422449b443c05599a6a43088a81c40d9d0c4a1cfa5f12ba",
-    "Tasks/01-wetland-recovery/public/protocol.md": "233ca325d31d3621cf48a6d72b7b318c555c3bdd0a53a214164ac54b6a8a58d5",
+    "Tasks/01-wetland-recovery/public/output_schema.json": "96b5b1303902f4f1e374c534e21c9074f77c0a1420d26a96a72baad9012ed84e",
+    "Tasks/01-wetland-recovery/public/protocol.md": "d86cf9ce6e48e3ae1fef0a3f13a97ace15c3d406e04e7e6d8e60d76e547aab75",
     "Tasks/01-wetland-recovery/author/build_inputs.py": "51b016480856d05567e3f0e65dddd999d2dce4ba9b6664c2fe215c7be6743d12",
-    "Tasks/01-wetland-recovery/author/check_outputs.py": "5831686e3c14ae2996f5162c6973a1eea4a37aec11d55e9fbb788c3425e6137b",
-    "Tasks/01-wetland-recovery/author/export_outputs.py": "2941b0aba6f914eba549e5acb998f578e0714ade43947fa35e45ea832bd2ba45",
+    "Tasks/01-wetland-recovery/author/check_outputs.py": "a92a5dc18d40b9c214c0460e913dc868ee790c0157ffbea93455d3b1e542d1af",
+    "Tasks/01-wetland-recovery/author/export_outputs.py": "75502692fd0229f90f2d1b16d0ce633160aa098b900e9b055ba90137f02a5752",
     "Tasks/01-wetland-recovery/author/generate_archive.py": "0c4f03a6d4bfd5e1c82b2c5eb9e9fdab6dee67883eb1304221db40a4f8985225",
-    "Tasks/01-wetland-recovery/author/reference.py": "a88d588264c38f91436b1381b9b1b37759974a42010ab2ae2c94c7ffb8aed690",
-    "Tasks/01-wetland-recovery/author/test_verifier.py": "397b8bee4a9d20aeda2ce854d5263038441db732351205b3a2ebfd7d382f4a1e",
+    "Tasks/01-wetland-recovery/author/reference.py": "9fa5ebd7b81220261b7424117e974163cea184d7673e52a01b2ca8e555432c92",
+    "Tasks/01-wetland-recovery/author/test_verifier.py": "720f02e4f66f5dfd2f98a0fa6e40f84c72f79d0548171198e73ac0baedc56f48",
     "Tasks/01-wetland-recovery/author/validate.py": "4640ec5756634ff4ead46b6e700a26ce296e9203139b4719688fd7834bccae39",
     "Tasks/01-wetland-recovery/instruction.md": "0c7c4953d7b6d528f587d2916fec773f451a57197bf77b476b0c510dfb399c97"
   }

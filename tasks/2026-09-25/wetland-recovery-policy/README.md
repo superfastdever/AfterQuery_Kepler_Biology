@@ -52,6 +52,7 @@ information the manager does not have.
 | Terminal emptiness | Risk 0.799525, dramatically better | Scores the wrong event |
 | Factorized destination occupancy | Risk 0.859104, better | Discards dependence induced by uncertain survival |
 | Standard occupancy fit | Correct-looking policy | Posterior wrong by L1 0.454 |
+| Trust the solver's answer | A correct, optimal policy | No certificate that it cannot be beaten |
 
 Three of these look like *good news*. That is the trap: the agent has no
 internal signal that it has gone wrong.
@@ -151,6 +152,9 @@ Optimum 0.9019740026. Gates: numeric 1e-6, optimality 1e-5.
 | Terminal emptiness | 0.799525386 | −1.02e-01 | 1.78e-15 | 9.22e-02 | audit | no |
 | Worst case within each branch | 0.902247973 | +2.74e-04 | 0.00e+00 | 0.00e+00 | optimality | no |
 | Scenario-specific (clairvoyant) | 0.901723573 | −2.50e-04 | n/a | n/a | not submittable | no |
+| Solver answer, no certificate | 0.901974003 | 0.00e+00 | 0.00e+00 | 0.00e+00 | certificate | no |
+| Certificate guessed as one scenario | 0.901974003 | 0.00e+00 | 0.00e+00 | 0.00e+00 | certificate | no |
+| Certificate guessed as uniform | 0.901974003 | 0.00e+00 | 0.00e+00 | 0.00e+00 | certificate | no |
 | Naive: survey then do nothing | 0.914286589 | +1.23e-02 | 0.00e+00 | 0.00e+00 | optimality | no |
 
 Three things this table is meant to show.
@@ -164,6 +168,11 @@ those artifacts are required rather than just the policy.
 **Skipping the retention correction fails on exactly one gate.** Its policy is
 the correct one and its audit is exact; only the posterior moves, by 175,170×
 the gate. The posterior artifact exists to catch this and nothing else does.
+
+**The certificate is an orthogonal gate.** The three certificate routes have a
+perfect posterior, a perfect audit and a zero optimality gap — every quantity
+graded before this addition is exactly right — and still fail. Nothing else in
+the bundle catches them.
 
 **The non-anticipativity constraint is worth 2.50e-04**, twenty-five times the
 optimality tolerance. Requiring one action table across undisclosed scenarios

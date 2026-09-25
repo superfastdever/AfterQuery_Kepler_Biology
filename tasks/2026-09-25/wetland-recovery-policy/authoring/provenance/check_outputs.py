@@ -48,6 +48,7 @@ def evaluate(folder,truth):
     with np.load(truth/'reference_arrays.npz',allow_pickle=False) as loaded:
         arrays={k:loaded[k] for k in loaded.files}
     roots={r['id']:r for r in gold['roots']}
+    gold['roots_by_id']=roots
     post=strict_load(folder/'posterior.json'); policy=strict_load(folder/'policy.json'); audit=strict_load(folder/'audit.json')
     w=probability(post['hypothesis_weights'],(6,))
     q=probability(post['selection_probability'],(6,))
@@ -71,6 +72,11 @@ def evaluate(folder,truth):
     worst=probability(policy['worst_risk'],())
     close(reported,risk); close(worst,float(max(risk)))
     require(max(risk)<=gold['best']['worst_risk']+1e-5,'Policy is outside optimality tolerance')
+    mix=probability(policy['scenario_weights'],(3,))
+    close(mix.sum(),1,1e-8)
+    bound=float(sum(np.min(np.einsum('k,kj->j',mix,C[:,o,:])) for o in range(32)))
+    require(bound>=gold['roots_by_id'][key]['relaxation_bound']-1e-9,
+            'Scenario weights do not attain the best available lower bound')
     require(isinstance(audit['roots'],list) and len(audit['roots'])==10,'Need all ten audit roots')
     seen=set()
     for item in audit['roots']:

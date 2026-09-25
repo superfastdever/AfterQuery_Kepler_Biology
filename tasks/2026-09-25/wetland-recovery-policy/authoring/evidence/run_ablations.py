@@ -186,6 +186,17 @@ routes["scenario-specific (clairvoyant)"] = {
     "per_scenario_risk": clair,
 }
 
+# --- 4b. correct policy, solver trusted, no certificate derived --------------
+for label, mix in [("solver answer, no certificate", None),
+                   ("certificate guessed as one scenario", [1.0, 0.0, 0.0]),
+                   ("certificate guessed as uniform", [1/3, 1/3, 1/3])]:
+    outputs = format_outputs(gold, arrays)
+    if mix is None:
+        outputs["policy.json"].pop("scenario_weights", None)
+    else:
+        outputs["policy.json"]["scenario_weights"] = mix
+    routes[label] = gates(outputs)
+
 # --- 5. naive baseline: survey, then do nothing ------------------------------
 zero = np.full(32, best["additions"].index(0))
 routes["naive: no second-stage restoration"] = gates(policy_from_indices(zero))

@@ -57,6 +57,12 @@ Collapse means that at least one adjacent pair of censuses in t=0,...,6 has all 
 
 Write the three files specified in instruction.md, with the structures in output_schema.json. The posterior array uses hypothesis order M0,...,M5 and state index 16*H+mask. Include zero-probability states rather than dropping them. Every numeric output must be finite. Probabilities must lie between zero and one, allowing only 1e-12 of floating-point boundary error. Required distributions must sum to one within 1e-8. Extra explanatory fields are allowed but do not replace required fields.
 
+For any admissible policy, the largest of its three scenario risks is at least the average of those risks under any weighting of the scenarios, and that average is in turn at least
+
+    sum over observation codes o of min over feasible additions a of sum over scenarios k of w[k] * P(o and collapse | initial choice, addition a at o, scenario k)
+
+for weights w on the three scenarios. Report in `scenario_weights` a weighting that makes this bound as large as it can be made. The reported weights are checked by evaluating that bound from sealed coefficients; a weighting short of the best available one is rejected. Weights concentrated on a single scenario do not attain it.
+
 The policy table has all 32 observation codes exactly once. A second-stage action is an added patch mask, not the cumulative restored mask. The result's three scenario risks must agree with an independent evaluation of the submitted policy within absolute error 1e-6. Its worst risk must be no greater than the independently established optimum plus 1e-5. Multiple policies can satisfy this tolerance; no particular policy text, solver, or tie-breaking convention is required.
 
 The audit file records all ten possible initial choices and their feasible additions. For each it gives branch probabilities P(o | archive, initial choice, scenario) and joint losses P(o and collapse | archive, initial choice, specified addition at o, scenario). The latter include paths that collapsed before the survey. Supply every legal addition, including the empty one and dominated choices; the audit is intended to make the calculation inspectable. The numerical checks compare posterior, retention, branch probabilities, and joint losses to independent reference values with absolute tolerance 1e-6. They also check the probability identities just described.

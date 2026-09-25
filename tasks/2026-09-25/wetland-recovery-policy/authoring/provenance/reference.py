@@ -9,7 +9,7 @@ import time
 from functools import lru_cache
 from pathlib import Path
 import numpy as np
-from scipy.optimize import milp, Bounds, LinearConstraint
+from scipy.optimize import milp, Bounds, LinearConstraint, linprog
 from scipy.special import expit, logit
 
 BASE = Path(__file__).resolve().parents[1]
@@ -180,16 +180,62 @@ def optimize(C):
     risks = C[:, np.arange(O), chosen].sum(axis=1)
     return chosen, risks, float(result.mip_dual_bound)/scale, float(result.mip_gap)
 
+def relaxation_bound(C):
+    """Best lower bound available from a scenario mixture.
+
+    For any admissible policy, the worst scenario risk is at least any weighted
+    average of the three scenario risks, and that average is at least
+
+        L(w) = sum_o min_a sum_k w[k] C[k,o,a].
+
+    The tightest such bound is max over w on the simplex, which is the value of
+    the randomized relaxation: the dual of the minimax LP. It sits strictly
+    below the deterministic optimum whenever committing to one action per
+    observation code costs something, and that difference is the price of
+    forbidding randomization.
+
+    Returns the maximizing weights and the bound they achieve.
+    """
+    K, O, J = C.shape
+    n = K + O                                   # w[0..K-1], mu[0..O-1]
+    obj = np.zeros(n)
+    obj[K:] = -1.0                              # linprog minimizes
+    rows = np.zeros((O*J, n))
+    r = 0
+    for o in range(O):
+        for a in range(J):
+            rows[r, K+o] = 1.0                  # mu_o
+            rows[r, :K] = -C[:, o, a]           # - w . C[:,o,a]
+            r += 1
+    simplex = np.zeros((1, n))
+    simplex[0, :K] = 1.0
+    result = linprog(obj, A_ub=rows, b_ub=np.zeros(O*J), A_eq=simplex, b_eq=[1.0],
+                     bounds=[(0, None)]*K + [(None, None)]*O, method='highs')
+    if not result.success:
+        raise RuntimeError(result.message)
+    w = np.clip(result.x[:K], 0.0, None)
+    w = w/w.sum()
+    return w, evaluate_bound(C, w)
+
+def evaluate_bound(C, w):
+    """L(w), evaluated directly rather than read off the solver."""
+    K, O, J = C.shape
+    return float(sum(np.min(dot(np.asarray(w, dtype=float), C[:, o, :])) for o in range(O)))
+
+
 def run(model, archive):
     weights, beliefs, logweights, selection = model.posterior(archive)
     roots, arrays = [], {}
     for restored, survey in model.first_actions():
         adds, C, mass = model.coefficients(weights, beliefs, restored, survey)
         chosen, risks, bound, gap = optimize(C)
+        weights_mix, relaxed = relaxation_bound(C)
         key = f'{restored}-{survey}'
         roots.append({'id': key, 'restored': restored, 'survey': survey, 'additions': adds,
                       'policy': [adds[x] for x in chosen], 'risk': risks.tolist(),
-                      'worst_risk': float(max(risks)), 'lower_bound': bound, 'mip_gap': gap})
+                      'worst_risk': float(max(risks)), 'lower_bound': bound, 'mip_gap': gap,
+                      'scenario_weights': weights_mix.tolist(), 'relaxation_bound': relaxed,
+                      'determinism_price': float(max(risks)) - relaxed})
         arrays[key + '-loss'] = C
         arrays[key + '-mass'] = mass
     best = min(roots, key=lambda x: x['worst_risk'])

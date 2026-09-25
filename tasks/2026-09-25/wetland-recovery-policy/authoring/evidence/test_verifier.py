@@ -56,6 +56,23 @@ def main():
         for s in root['scenarios'].values():
             s['joint_collapse']=(np.array(s['joint_collapse'])/np.array(s['branch_probability'])[:,None]).tolist()
     trial('conditional losses substituted for joint losses',p,False)
+    # The optimality certificate: a separate derivation from the policy itself.
+    p=copy.deepcopy(original); del p['policy.json']['scenario_weights']
+    trial('certificate absent',p,False)
+    p=copy.deepcopy(original); p['policy.json']['scenario_weights']=[1.0,0.0,0.0]
+    trial('certificate concentrated on one scenario',p,False)
+    p=copy.deepcopy(original); p['policy.json']['scenario_weights']=[1/3,1/3,1/3]
+    trial('uniform scenario weights',p,False)
+    p=copy.deepcopy(original); p['policy.json']['scenario_weights']=[0.7,0.4,-0.1]
+    trial('negative scenario weight',p,False)
+    p=copy.deepcopy(original); p['policy.json']['scenario_weights']=[0.6,0.3,0.0]
+    trial('scenario weights not summing to one',p,False)
+    p=copy.deepcopy(original)
+    _gold=json.loads((truth/'reference.json').read_text())
+    other=[r for r in _gold['roots'] if r['id']!=_gold['best']['id']][0]
+    p['policy.json']['scenario_weights']=other['scenario_weights']
+    trial('certificate from a different initial choice',p,False)
+
     # Entire internally consistent outputs from plausible but scientifically wrong models.
     class IndependentWeather(Model):
         def emission(self,m,visits,water=None,intensive=False):

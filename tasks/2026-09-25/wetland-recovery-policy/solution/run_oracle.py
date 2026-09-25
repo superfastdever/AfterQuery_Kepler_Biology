@@ -45,6 +45,7 @@ def format_outputs(summary, arrays):
                 for o, a in enumerate(best["policy"])
             ],
             "scenario_risk": dict(zip(SCENARIOS, best["risk"])),
+            "scenario_weights": best["scenario_weights"],
             "worst_risk": best["worst_risk"],
         },
         "audit.json": {"roots": []},
