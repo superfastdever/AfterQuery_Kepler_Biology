@@ -3,6 +3,11 @@
 Work through this before submitting. It is ordered by the pipeline stage that
 would catch each item, so a failure here is a failure there.
 
+> ⚠ This checklist is derived from the **General** dataset's guide. This repo
+> submits under **Scientific computing**, whose contract is stricter and is not
+> yet vendored. Re-read this list against that contract before trusting it.
+> See "Open: bundle contract" in `CLAUDE.md`.
+
 ## 0. Before writing any code
 
 - [ ] The specific **agent failure mode** is written down. Not "it's hard" —
@@ -90,8 +95,13 @@ Run `tools/validate.sh tasks/<slug>`, several times.
 - [ ] `relevant_experience` describes genuine professional background, written
       by the repo owner.
 - [ ] `expert_time_estimate_hours` is honest.
-- [ ] `category = "Science"`, `subcategory = "Biology"`, and the submit form
-      matches.
+- [ ] `domain` and `field` carry the real **slugs** (not display names, not
+      `TODO-*`), and match what is selected on the submit form.
+- [ ] `field` is one of the in-scope Life Sciences fields — Ecology &
+      Evolutionary Biology, Neuroscience & Cognitive Science, or Medicine &
+      Health Sciences. **Never** Biology & Biotechnology.
+- [ ] `subfield` is free text and specific (e.g. "population genetics", not
+      "biology").
 - [ ] `instruction.md` was **written by the repo owner**, in their own words.
 
 ## 7. Package

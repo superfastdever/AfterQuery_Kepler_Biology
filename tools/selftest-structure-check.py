@@ -31,7 +31,7 @@ def patch(path: Path, old: str, new: str) -> None:
 
 # Each mutation takes the copied task dir and breaks exactly one rule.
 # The second element is the rule name expected in the failure output.
-MUTATIONS: list[tuple[str, callable, str]] = [
+MUTATIONS: list[tuple[str, callable, "str | None"]] = [
     ("missing required file",
      lambda d: (d / "instruction.md").unlink(),
      "layout"),
@@ -138,13 +138,36 @@ MUTATIONS: list[tuple[str, callable, str]] = [
                         '[task]\n# moved too low\nartifacts = ["/app/output.json"]'),
      "task.toml"),
 
-    ("invalid subcategory for category",
+    ("field outside Life Sciences",
      lambda d: patch(d / "task.toml",
-                     'subcategory = "Biology"', 'subcategory = "Frontend"'),
+                     'field = "TODO-field-slug"', 'field = "Frontend"'),
      "metadata"),
+
+    ("field banned by repo policy (display name)",
+     lambda d: patch(d / "task.toml", 'field = "TODO-field-slug"',
+                     'field = "Biology & Biotechnology"'),
+     "metadata"),
+
+    ("field banned by repo policy (slug form)",
+     lambda d: patch(d / "task.toml", 'field = "TODO-field-slug"',
+                     'field = "biology-biotechnology"'),
+     "metadata"),
+
+    ("allowed field passes the ban",
+     lambda d: patch(d / "task.toml", 'field = "TODO-field-slug"',
+                     'field = "ecology-evolutionary-biology"'),
+     None),
 
     ("missing required metadata field",
      lambda d: patch(d / "task.toml", "relevant_experience = \"\"", ""),
+     "metadata"),
+
+    ("subfield key removed",
+     lambda d: patch(d / "task.toml", 'subfield = ""', ""),
+     "metadata"),
+
+    ("domain key removed",
+     lambda d: patch(d / "task.toml", 'domain = "TODO-domain-slug"', ""),
      "metadata"),
 
     ("task name not under afterquery/",
@@ -195,7 +218,18 @@ def main() -> int:
 
             code, out = run_checker(work)
             rules = failing_rules(out)
-            if code != 0 and expected_rule in rules:
+
+            if expected_rule is None:
+                # A legal edit: the checker must NOT fire. Guards against rules
+                # that reject valid bundles, which is the costlier mistake.
+                if code == 0:
+                    print(f"  ok    {label}  -> correctly accepted")
+                    passed += 1
+                else:
+                    print(f"  FAIL  {label}: rejected a legal bundle "
+                          f"({sorted(rules)})")
+                    failed += 1
+            elif code != 0 and expected_rule in rules:
                 print(f"  ok    {label}  -> {expected_rule}")
                 passed += 1
             elif code != 0:

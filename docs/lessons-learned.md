@@ -11,9 +11,13 @@ to break models in a way the rest of the set does not. **Add a row before
 building, not after.** If the new idea's failure mode is already in this table,
 change the idea.
 
-| Task | Failure mode targeted | Source of difficulty | Verifier shape | Outcome |
-| --- | --- | --- | --- | --- |
-| _(none yet)_ | | | | |
+| Task | Field | Failure mode targeted | Source of difficulty | Verifier shape | Outcome |
+| --- | --- | --- | --- | --- | --- |
+| _(none yet)_ | | | | | |
+
+The **Field** column keeps coverage visible: the two thin fields (Ecology &
+Evolutionary Biology, Neuroscience & Cognitive Science) are where tasks are
+most wanted, so a run of entries in one field is a signal to move.
 
 "Source of difficulty" should name one of: long-horizon dependent steps; a rich
 environment that must be explored; a dynamic environment; cross-domain

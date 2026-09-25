@@ -10,7 +10,7 @@ instead of a submission.
 
 Exit status is 0 when every rule passes, 1 otherwise.
 
-Rules are transcribed from docs/kepler-instructions.md ("Bundle layout",
+Rules are transcribed from docs/kepler-instructions-general.md ("Bundle layout",
 "task.toml", "Rules and limits", "Writing the verifier", "Common mistakes").
 When that document changes, change this file with it.
 """
@@ -41,24 +41,28 @@ PIN_SCANNED = (
     "solution/solve.sh",
 )
 
-CATEGORIES = {
-    "Science": {
-        "Biology", "Chemistry", "Physics", "Earth",
-        "Robotics", "Math", "Linguistics",
-    },
-    "Software": {
-        "Algorithms", "Systems", "Databases",
-        "Data engineering", "Frontend", "Languages",
-    },
-    "ML": {"Training", "Inference", "Evaluation", "Kernels"},
-    "Operations": {
-        "Finance", "Logistics", "Supply chain",
-        "Claims", "Compliance", "Marketing",
-    },
-    "Security": {"Cryptography", "Reverse engineering", "Forensics", "AppSec"},
-    "Hardware": {"CAD", "RTL"},
-    "Media": {"Music", "Design"},
+# Life Sciences fields, as the submit form lists them. The form shows display
+# names; task.toml carries slugs, and the exact slug strings are not yet known
+# -- see "Open: bundle contract" in CLAUDE.md. Both spellings are accepted here
+# so the rule is useful either way.
+LIFE_SCIENCES_FIELDS = {
+    "Ecology & Evolutionary Biology",
+    "Neuroscience & Cognitive Science",
+    "Medicine & Health Sciences",
+    "Biology & Biotechnology",
 }
+
+# Repo owner's policy, NOT a platform rule: this field's pool is already well
+# stocked, so tasks are steered to the thin ones. One line to relax if that
+# changes.
+BANNED_FIELDS = {"Biology & Biotechnology"}
+
+
+def _norm_field(value: str) -> str:
+    """Compare display names and slugs alike: 'ecology-evolutionary-biology'
+    and 'Ecology & Evolutionary Biology' normalise to the same token."""
+    return re.sub(r"[^a-z0-9]+", "", str(value).lower().replace("and", ""))
+
 
 REQUIRED_METADATA = (
     "author_name",
@@ -66,8 +70,9 @@ REQUIRED_METADATA = (
     "difficulty_explanation",
     "solution_explanation",
     "verification_explanation",
-    "category",
-    "subcategory",
+    "domain",
+    "field",
+    "subfield",
     "tags",
     "expert_time_estimate_hours",
     "relevant_experience",
@@ -213,14 +218,21 @@ def check_metadata(cfg: dict, rep: Report, allow_placeholders: bool) -> None:
         else:
             rep.ok("metadata")
 
-    cat = md.get("category")
-    if cat is not None:
-        if rep.check("metadata", cat in CATEGORIES,
-                     f"category {cat!r} is not one of {sorted(CATEGORIES)}"):
-            sub = md.get("subcategory")
-            rep.check("metadata", sub in CATEGORIES[cat],
-                      f"subcategory {sub!r} is not valid for {cat} "
-                      f"(expected one of {sorted(CATEGORIES[cat])})")
+    field = md.get("field")
+    if field and not (allow_placeholders and str(field).startswith("TODO")):
+        known = {_norm_field(f): f for f in LIFE_SCIENCES_FIELDS}
+        norm = _norm_field(field)
+        allowed = sorted(LIFE_SCIENCES_FIELDS - BANNED_FIELDS)
+        if rep.check("metadata", norm in known,
+                     f"field {field!r} is not an in-scope Life Sciences field "
+                     f"(expected one of {allowed}, as a slug or display name)"):
+            rep.check(
+                "metadata",
+                known[norm] not in BANNED_FIELDS,
+                f"field {known[norm]!r} is excluded by repo policy, not by the "
+                "platform: its pool is well stocked, so tasks go to the thin "
+                "fields instead (see CLAUDE.md). Relax BANNED_FIELDS to change.",
+            )
 
     hrs = md.get("expert_time_estimate_hours")
     if isinstance(hrs, (int, float)) and not allow_placeholders:
@@ -441,6 +453,29 @@ def check_compose(task: Path, rep: Report) -> None:
               "docker-compose.yaml must not declare volumes of any kind")
 
 
+def check_contract(rep: Report) -> None:
+    """Warn while the submission dataset's own guide is not vendored.
+
+    This repo submits under the **Scientific computing** dataset, whose guide
+    advertises "a stricter, science-specific bundle contract". Only the General
+    variant has been vendored, so rules this checker enforces may be too loose
+    -- or simply wrong -- for the dataset the work is actually filed under.
+
+    A warning, not a failure: it must not block building and validating. The
+    hard stop lives in tools/package.sh, since packaging is what produces a
+    submission.
+    """
+    docs = Path(__file__).resolve().parent.parent / "docs"
+    if not (docs / "kepler-instructions-scientific-computing.md").is_file():
+        rep.warn(
+            "contract",
+            "the Scientific computing bundle contract is not vendored in docs/; "
+            "this checker encodes the General dataset's rules, which are known "
+            "to be laxer. Do not submit until it is in and these rules are "
+            "re-checked against it (see CLAUDE.md, 'Open: bundle contract')",
+        )
+
+
 def check_placeholders(task: Path, rep: Report) -> None:
     markers = ("TODO", "NotImplementedError", "TODO-slug")
     for path in task.rglob("*"):
@@ -499,6 +534,7 @@ def main() -> int:
     check_leakage(task, rep)
     check_forbidden(task, rep)
     check_compose(task, rep)
+    check_contract(rep)
     if not args.allow_placeholders:
         check_placeholders(task, rep)
 

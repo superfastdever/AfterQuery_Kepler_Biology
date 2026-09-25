@@ -5,17 +5,23 @@ a benchmark of hard, real computer work that current AI agents cannot do yet.
 
 Each task is a self-contained [harbor](https://harborframework.com/docs/tasks)
 bundle: a written brief, a containerized environment, a reference solution, and
-a sealed verifier that scores an attempt 0 or 1. Every task here is filed under
-Kepler's **Science** category with the **Biology** label.
+a sealed verifier that scores an attempt 0 or 1. Tasks are filed under the
+**Life Sciences** domain of the **Scientific computing** dataset, with a
+`field` and a free-text `subfield`.
 
 Read `CLAUDE.md` before contributing — it carries the rules that govern this
-repo, including who writes `instruction.md`.
+repo, including who writes `instruction.md` and which fields are in scope.
+
+> ⚠ **The Scientific computing bundle contract is not yet vendored.** Only the
+> General dataset's guide is in `docs/`, and the tooling encodes its laxer
+> rules. `tools/package.sh` refuses to build a submission zip until that is
+> fixed. See "Open: bundle contract" in `CLAUDE.md`.
 
 ## Layout
 
 | Path | Purpose |
 | --- | --- |
-| `docs/kepler-instructions.md` | Platform guidance, vendored verbatim. The spec everything else derives from. **Do not edit.** |
+| `docs/kepler-instructions-general.md` | Platform guidance for the **General** dataset, vendored verbatim. **Do not edit.** Not the contract this repo submits under. |
 | `docs/authoring-checklist.md` | Gate-by-gate checklist to work through before submitting. |
 | `docs/local-validation.md` | Running the gates locally, and sandbox quirks that get in the way. |
 | `docs/lessons-learned.md` | Failure modes already used, and feedback from past reviews. |
@@ -68,8 +74,9 @@ solved every time.
 
 ## Non-negotiables
 
-- **Life Sciences only.** This repo's scope is the domain the author was
-  accepted for.
+- **Life Sciences only**, and not every field within it. Ecology & Evolutionary
+  Biology and Neuroscience & Cognitive Science are the focus; Medicine & Health
+  Sciences occasionally; Biology & Biotechnology never. See `CLAUDE.md`.
 - **`instruction.md` is written by the repo owner**, not generated. Kepler runs
   an AI check on it and rejects flagged submissions. See `CLAUDE.md`.
 - **The internet stays open.** Obscurity is not difficulty, and a solution
