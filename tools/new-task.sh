@@ -40,10 +40,31 @@ dest="$ROOT/tasks/$date_dir/$slug"
 mkdir -p "$ROOT/tasks/$date_dir"
 cp -R "$TEMPLATE" "$dest"
 
-# The template's README documents how to use the template. It is not task
-# content and must not ship in the submission zip. Design notes belong in
-# docs/task-ideas.md, which stays out of the bundle.
-rm -f "$dest/README.md"
+# The template's README documents how to use the template, which is not task
+# content. Replace it with a task README: the submit form recommends one, and
+# README.md is one of the few names allowed at the bundle root.
+cat > "$dest/README.md" <<EOF
+# $slug
+
+One paragraph on what this task asks for and why it is hard.
+
+## Data
+
+How the inputs were generated, and how to regenerate them. The generator and
+its seeds live in \`authoring/\`, which is never mounted into a container.
+
+## Verification
+
+What the verifier checks, and why the result cannot be faked.
+
+## Rebuilding
+
+\`\`\`bash
+tools/structure-check.py tasks/$date_dir/$slug
+tools/validate.sh tasks/$date_dir/$slug
+tools/package.sh $slug
+\`\`\`
+EOF
 
 # Point the config at the new slug. Everything else is left as a placeholder on
 # purpose -- the structure check fails while any remain.

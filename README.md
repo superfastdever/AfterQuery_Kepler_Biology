@@ -54,7 +54,7 @@ Build in this order — it is not arbitrary:
    define what correct means, rather than defining it as whatever your solution
    happened to produce.
 4. **Reference solution**, until the oracle scores 1.
-5. **Try to cheat it.** See `_template/cheat/README.md`. If the laziest attempt
+5. **Try to cheat it.** See `_template/authoring/NOTES.md`. If the laziest attempt
    passes, the verifier is wrong.
 6. **Metadata**, then `instruction.md`.
 

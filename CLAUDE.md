@@ -11,10 +11,15 @@ bundle — instruction, containerized environment, reference solution, sealed
 verifier — designed so that frontier AI agents fail at it for legitimate
 reasons. Tasks are submitted one zip at a time.
 
-The authoritative platform guidance is vendored verbatim at
-`docs/kepler-instructions.md`. **Do not edit that file.** It is the spec for
-every gate a submission must clear, and it is kept unaltered so it stays
-trustworthy as a reference.
+Platform guidance is vendored verbatim at `docs/kepler-instructions.md`.
+**Do not edit that file.** It is kept unaltered so it stays trustworthy as a
+reference.
+
+**Where it disagrees with the submit form's REQUIRED LAYOUT panel, the form
+wins.** That panel is collapsed by default and is more specific than the
+general guidance; expanding it corrected the verifier pin versions, the timeout
+ceiling, several required `[metadata]` keys, the network settings and the
+bundle root rule. `tools/structure-check.py` encodes the form's version.
 
 It defines the authoring workflow, the bundle structure and the validation
 requirements. It does **not** define this repo's subject scope — that is set by
@@ -59,7 +64,9 @@ From `docs/kepler-instructions.md`, "Authorship & originality":
 | --- | --- |
 | `instruction.md` | **No** — the repo owner writes and supplies it |
 | `[metadata].relevant_experience` | **No** — a factual claim about the owner's career |
-| `environment/`, `tests/`, `solution/`, data generation, `tools/` | **Yes** — explicitly permitted |
+| `author_name` / `author_email` / `author_organization` / `author_profile` | **No** — the owner's identity |
+| `[metadata].conflicts_of_interest` | **No** — a formal declaration, never generated or guessed |
+| `environment/`, `tests/`, `solution/`, `authoring/`, data generation, `tools/` | **Yes** — explicitly permitted |
 
 An AI assistant working in this repo **must not**:
 
@@ -115,6 +122,15 @@ a duplicate.
 
 Nothing in a task directory may depend on anything outside itself: the zip of
 that directory's contents is the whole submission.
+
+Inside a task, **nothing may sit at the bundle root** except `task.toml`,
+`instruction.md`, `README.md`, and the `environment/`, `solution/`, `tests/`
+and `authoring/` directories.
+
+`authoring/` holds generators, seeds, cheat attempts and notes. It is **never
+mounted into any container**, which makes it the right home for the script that
+produced the data — keeping it out of `environment/`, where the agent could
+read it.
 
 ### `task-meta.json` and `task_list.md`
 

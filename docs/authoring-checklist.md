@@ -22,16 +22,28 @@ Run `tools/structure-check.py tasks/<date>/<slug>`. It covers all of these:
 
 - [ ] `instruction.md`, `task.toml`, `environment/Dockerfile`,
       `solution/solve.sh`, `tests/test.sh`, `tests/Dockerfile` all present.
+- [ ] **Nothing else at the bundle root.** Only those, plus `environment/`,
+      `solution/`, `tests/`, `authoring/` and `README.md`. Generators, seeds,
+      cheat attempts and notes go in `authoring/`, which is never mounted into
+      a container.
+- [ ] `[task].description` is set.
+- [ ] `[metadata]` carries `author_organization`, `author_profile` and
+      `conflicts_of_interest` as well as the author name and email. These are
+      factual claims about the owner and are never generated.
+- [ ] `category = "Science"`, `subcategory` is a Science label, and
+      `domain` / `field` / `subfield` are all set.
+- [ ] `[environment].network_mode = "public"` and
+      `[verifier.environment].network_mode = "no-network"`.
 - [ ] `[task].name` is `afterquery/<slug>`; slug is lowercase, ≤3 hyphenated
       words, and equals the directory name.
 - [ ] `artifacts = [...]` sits above the first `[section]`.
 - [ ] Python packages pinned with `==` in both Dockerfiles, `test.sh` and
-      `solve.sh`. Verifier pins are exactly `pytest==9.1.1` and
-      `pytest-json-ctrf==0.5.2`.
+      `solve.sh`. Verifier pins are exactly `pytest==8.4.1` and
+      `pytest-json-ctrf==0.3.5`.
 - [ ] apt packages never version-pinned; `apt-get update` before installing and
       `rm -rf /var/lib/apt/lists/*` after.
 - [ ] `allow_internet` not set, with either value.
-- [ ] `[agent].timeout_sec` between 9000 and 18000; `cpus` ∈ {1,2,4,8,16};
+- [ ] `[agent].timeout_sec` at least 9000 and no timeout above 28800; `cpus` ∈ {1,2,4,8,16};
       `memory_mb` ∈ {1024,2048,4096,8192,16384}; `storage_mb` ≤ 40960.
 - [ ] `[verifier].environment_mode = "separate"`.
 - [ ] No `FROM --platform=` pins. No eval-set canary markers.
@@ -69,7 +81,7 @@ Run `tools/validate.sh tasks/<date>/<slug>`, several times.
 
 ## 4. Anti-cheat probe
 
-- [ ] You wrote the laziest passing attempt you could think of into `cheat/`
+- [ ] You wrote the laziest passing attempt you could think of into `authoring/`
       and confirmed it scores **0**.
 - [ ] Hardcoding plausible constants fails.
 - [ ] Echoing an input back as the output fails.

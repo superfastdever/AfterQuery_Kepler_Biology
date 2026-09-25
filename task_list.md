@@ -10,4 +10,4 @@ Create one with `tools/new-task.sh <slug>`. It lands in `tasks/<YYYY-MM-DD>/<slu
 
 ---
 
-<sub>Generated 2026-09-25 01:38 UTC</sub>
+<sub>Generated 2026-09-25 01:46 UTC</sub>

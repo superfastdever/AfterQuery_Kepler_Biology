@@ -21,7 +21,7 @@ must all agree.
 3. `tests/test_outputs.py` + ground truth — the verifier. Write this *before*
    the reference solution: it forces you to define what correct means.
 4. `solution/solve.sh` — the reference solution. Must score 1.
-5. `cheat/` — try to break your own verifier. See `cheat/README.md`.
+5. `authoring/` — generator, seeds, and your own cheat attempts. See `authoring/NOTES.md`.
 6. `task.toml` — metadata and resources. Time the oracle, then set
    `[agent].timeout_sec` to several times that.
 7. `instruction.md` — **written by the repo owner, not by AI.** See the comment

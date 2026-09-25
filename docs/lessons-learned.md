@@ -41,10 +41,24 @@ review · anti-cheat · difficulty probe · run audit · human review.
 
 Things learned building these, beyond what the platform guidance says.
 
-- Harbor's own `harbor init` scaffold does **not** satisfy Kepler's rules: it
-  installs pytest inside `test.sh` at verify time, pins `pytest==8.4.1` rather
-  than the mandated `9.1.1`, and ships no `tests/Dockerfile`. Use
-  `tools/new-task.sh`, not `harbor init`.
+- **The submit form's REQUIRED LAYOUT panel is the authoritative spec, and it
+  is collapsed by default.** Expanding it corrected six things taken from the
+  general guidance: the verifier pins are `pytest==8.4.1` and
+  `pytest-json-ctrf==0.3.5` (not 9.1.1 / 0.5.2), timeouts cap at 28800 (not
+  18000), `[task].description` is required, `[metadata]` also needs
+  `author_organization`, `author_profile`, `conflicts_of_interest` and keeps
+  `category = "Science"` plus `subcategory` alongside domain/field/subfield,
+  `[environment].network_mode = "public"` and
+  `[verifier.environment].network_mode = "no-network"` are both required, and
+  cheat attempts belong in `authoring/` because nothing else may sit at the
+  bundle root. Read the panel before trusting any general-guidance value.
+- Harbor's own `harbor init` scaffold still does not satisfy the rules: it
+  installs pytest inside `test.sh` at verify time and ships no
+  `tests/Dockerfile`. Its pins happen to be correct. Use `tools/new-task.sh`,
+  not `harbor init`.
+- `authoring/` is never mounted into a container, so it is the sanctioned home
+  for generators and seeds. Putting them there rather than in `environment/` is
+  what stops the process that made the answer from leaking to the agent.
 - `[metadata]` is free-form in harbor's schema, so Kepler's custom fields
   (`difficulty_explanation`, `relevant_experience`, …) validate fine locally.
   Local acceptance says nothing about whether reviewers will accept their

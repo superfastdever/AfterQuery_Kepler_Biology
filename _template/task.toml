@@ -1,8 +1,8 @@
 # Kepler task configuration.
 #
-# Every [metadata] field below is REQUIRED. Reviewers read the three
-# *_explanation fields and relevant_experience first; generic text there fails
-# review.
+# Field list and values follow the REQUIRED LAYOUT panel on the submit form,
+# which is more specific than the general guidance in docs/kepler-instructions.md
+# where the two differ.
 #
 # `artifacts` must stay above the first [section]. It lists the absolute paths
 # harbor copies out of the agent's container for the verifier. Nothing else the
@@ -15,22 +15,37 @@ artifacts = ["/app/output.json"]
 # task name submitted on the platform: lowercase, at most 3 hyphen-separated
 # words.
 name = "afterquery/UNSET-slug"
+# One line saying what the task asks for. Required.
+description = ""
 
 [metadata]
+# --- author identity: all four are factual claims about the owner. ----------
+# WRITTEN BY THE REPO OWNER, NOT BY AI.
 author_name = ""
 author_email = ""
+author_organization = ""
+author_profile = ""
+# A formal declaration. Never generated, never guessed.
+conflicts_of_interest = ""
+
+# --- the three explanations reviewers read first ---------------------------
 # Why this is hard for agents AND for humans. Name the specific failure mode
-# the task targets — the invariant that gets broken, the race that is invisible,
+# the task targets: the invariant that gets broken, the race that is invisible,
 # the rule that has to be inferred rather than read.
 difficulty_explanation = ""
 # High-level approach and the key insights a solver needs.
 solution_explanation = ""
 # How tests establish correctness, and why the result cannot be faked.
 verification_explanation = ""
-# Classification. The submit form and task.toml must carry the SAME domain and
-# field slugs, plus a free-text subfield.
+
+# --- classification --------------------------------------------------------
+# category stays "Science" for this dataset.
+category = "Science"
+# Subdomain label within the Science category.
+subcategory = "Biology"
 #
-# This repo is approved for Life Sciences only.
+# domain and field carry the SAME slugs the submit form has selected, plus a
+# free-text subfield. This repo is approved for Life Sciences only.
 domain = "TODO-domain-slug"       # Life Sciences
 #
 # The field is "the one the task's core computational work belongs to":
@@ -39,10 +54,10 @@ domain = "TODO-domain-slug"       # Life Sciences
 #   Medicine & Health Sciences       clinical, epidemiology, public health occasionally
 #   Biology & Biotechnology          bioimaging, genomics, synthetic bio   NEVER (owner policy)
 field = "TODO-field-slug"
-#
 # Free text, as specific as you can make it.
 subfield = ""                     # e.g. "population genetics"
-tags = []                         # e.g. ["genomics", "python"]
+
+tags = []                         # e.g. ["phylogenetics", "python"]
 # Best-case hours for a focused domain expert. Be honest; it calibrates review.
 expert_time_estimate_hours = 0
 # WRITTEN BY THE REPO OWNER, NOT BY AI. Must describe actual professional
@@ -50,18 +65,26 @@ expert_time_estimate_hours = 0
 relevant_experience = ""
 
 [verifier]
-# Raise this to comfortably exceed the test suite's runtime (max 18000).
+# Raise this to comfortably exceed the test suite's runtime.
 timeout_sec = 120.0
-# Required by Kepler: the verifier runs in its own container, built from
-# tests/Dockerfile, after the agent's container is torn down.
+# The verifier runs in its own container, built from tests/Dockerfile, after
+# the agent's container is torn down.
 environment_mode = "separate"
 
+[verifier.environment]
+# The verifier is sealed: it grades artifacts and must not reach the network.
+network_mode = "no-network"
+
 [agent]
-# Minimum 9000 (2.5h), maximum 18000. Time the oracle run, then give the agent
-# several times that. Do not leave this at the template value by accident.
+# Time the oracle run, then give the agent several times that. Ceiling is
+# 28800; the guidance also asks for at least 9000 (2.5h). Do not leave this at
+# the template value by accident.
 timeout_sec = 9000.0
 
 [environment]
+# The agent keeps its full capabilities, network included. Blocking access is
+# not a source of difficulty.
+network_mode = "public"
 build_timeout_sec = 600.0
 cpus = 1                          # 1 / 2 / 4 / 8 / 16 only
 memory_mb = 2048                  # 1024 / 2048 / 4096 / 8192 / 16384 only
@@ -69,5 +92,5 @@ storage_mb = 10240                # max 40960
 gpus = 0                          # stays 0 for Science/Biology tasks
 # gpu_types = ["H100"]            # only for a GPU-option ML task
 #
-# Do NOT add allow_internet with either value. Harbor's open-internet default
-# is the policy, and setting it fails the structure check.
+# Do NOT add an allow_internet key, with either value. network_mode above is
+# how the policy is expressed.

@@ -66,7 +66,7 @@ Name the laziest attempt that would pass, then confirm it does not. At minimum:
 - [ ] Writing the file and exiting 0 fails.
 - [ ] Nothing readable in the environment image shortcuts the work.
 
-Keep the attempt in `cheat/`. Kepler runs an adversarial probe that tries the
+Keep the attempt in `authoring/`. Kepler runs an adversarial probe that tries the
 same thing.
 
 ### 5. Leakage

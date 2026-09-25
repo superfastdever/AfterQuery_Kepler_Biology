@@ -67,9 +67,14 @@ def _norm_field(value: str) -> str:
 REQUIRED_METADATA = (
     "author_name",
     "author_email",
+    "author_organization",
+    "author_profile",
+    "conflicts_of_interest",
     "difficulty_explanation",
     "solution_explanation",
     "verification_explanation",
+    "category",
+    "subcategory",
     "domain",
     "field",
     "subfield",
@@ -78,13 +83,29 @@ REQUIRED_METADATA = (
     "relevant_experience",
 )
 
-VERIFIER_PINS = ("pytest==9.1.1", "pytest-json-ctrf==0.5.2")
+# The submit form fixes the category for this dataset and keeps the Science
+# label set alongside the newer domain/field/subfield trio.
+REQUIRED_CATEGORY = "Science"
+SCIENCE_LABELS = {
+    "Biology", "Chemistry", "Physics", "Earth", "Robotics", "Math", "Linguistics",
+}
+
+# Only these may sit at the bundle root: the form says "nothing else at the
+# bundle root". task-meta.json is repo bookkeeping and is stripped from the zip
+# by tools/package.sh, so it is tolerated here but never ships.
+ALLOWED_ROOT = {
+    "task.toml", "instruction.md", "README.md",
+    "environment", "solution", "tests", "authoring",
+    "task-meta.json",
+}
+
+VERIFIER_PINS = ("pytest==8.4.1", "pytest-json-ctrf==0.3.5")
 
 ALLOWED_CPUS = {1, 2, 4, 8, 16}
 ALLOWED_MEMORY_MB = {1024, 2048, 4096, 8192, 16384}
 MAX_STORAGE_MB = 40960
 AGENT_TIMEOUT_MIN = 9000
-TIMEOUT_MAX = 18000
+TIMEOUT_MAX = 28800
 
 SUFFIX_TEMPLATE = (
     "You have {n} seconds to complete this task. "
@@ -171,6 +192,18 @@ def check_layout(task: Path, rep: Report) -> None:
     for rel in REQUIRED_FILES:
         rep.check("layout", (task / rel).is_file(), f"missing required file {rel}")
 
+    # "nothing else at the bundle root"
+    for entry in sorted(task.iterdir()):
+        if entry.name.startswith("."):
+            continue
+        rep.check(
+            "layout",
+            entry.name in ALLOWED_ROOT,
+            f"{entry.name} is not allowed at the bundle root "
+            f"(allowed: {', '.join(sorted(ALLOWED_ROOT - {'task-meta.json'}))}; "
+            "generators, seeds, cheat attempts and notes go in authoring/)",
+        )
+
 
 def check_task_toml(task: Path, cfg: dict, rep: Report,
                     allow_placeholders: bool) -> None:
@@ -204,6 +237,11 @@ def check_task_toml(task: Path, cfg: dict, rep: Report,
         rep.check("task.toml", slug == task.name,
                   f"slug {slug!r} must equal the directory name {task.name!r}")
 
+    desc = cfg.get("task", {}).get("description")
+    if not allow_placeholders:
+        rep.check("task.toml", isinstance(desc, str) and desc.strip() != "",
+                  "[task].description is required and must not be empty")
+
 
 def check_metadata(cfg: dict, rep: Report, allow_placeholders: bool) -> None:
     md = cfg.get("metadata", {})
@@ -217,6 +255,16 @@ def check_metadata(cfg: dict, rep: Report, allow_placeholders: bool) -> None:
             rep.fail("metadata", f"{key} is empty")
         else:
             rep.ok("metadata")
+
+    rep.check("metadata", md.get("category") == REQUIRED_CATEGORY,
+              f'category must be "{REQUIRED_CATEGORY}" for this dataset, '
+              f"got {md.get('category')!r}")
+
+    sub = md.get("subcategory")
+    if sub is not None:
+        rep.check("metadata", sub in SCIENCE_LABELS,
+                  f"subcategory {sub!r} is not a Science label "
+                  f"(expected one of {sorted(SCIENCE_LABELS)})")
 
     field = md.get("field")
     if field and not (allow_placeholders and str(field).startswith("TODO")):
@@ -262,7 +310,17 @@ def check_resources(task: Path, cfg: dict, rep: Report) -> None:
                   f"[agent].timeout_sec {at} outside "
                   f"[{AGENT_TIMEOUT_MIN}, {TIMEOUT_MAX}]")
 
+    # The verifier is sealed; the agent keeps full network access.
+    venv = ver.get("environment", {})
+    rep.check("verifier", venv.get("network_mode") == "no-network",
+              '[verifier.environment].network_mode must be "no-network", '
+              f"got {venv.get('network_mode')!r}")
+
     env = cfg.get("environment", {})
+    rep.check("environment", env.get("network_mode") == "public",
+              '[environment].network_mode must be "public" -- blocking the '
+              "agent's network is not a source of difficulty, got "
+              f"{env.get('network_mode')!r}")
     rep.check("environment", "allow_internet" not in env,
               "allow_internet must not be set, with either value")
     rep.check("environment", env.get("cpus") in ALLOWED_CPUS,

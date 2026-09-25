@@ -12,7 +12,7 @@ FROM python:3.13-slim-bookworm
 #       && rm -rf /var/lib/apt/lists/*
 
 # Python packages must be pinned with ==. These two versions are mandated.
-RUN pip install --no-cache-dir pytest==9.1.1 pytest-json-ctrf==0.5.2
+RUN pip install --no-cache-dir pytest==8.4.1 pytest-json-ctrf==0.3.5
 
 # Bake the tests and ground truth into the image; harbor does NOT upload tests/
 # at verify time.

@@ -63,8 +63,8 @@ MUTATIONS: list[tuple[str, callable, "str | None"]] = [
 
     ("unpinned python package",
      lambda d: patch(d / "tests" / "Dockerfile",
-                     "pytest==9.1.1 pytest-json-ctrf==0.5.2",
-                     "pytest pytest-json-ctrf==0.5.2"),
+                     "pytest==8.4.1 pytest-json-ctrf==0.3.5",
+                     "pytest pytest-json-ctrf==0.3.5"),
      "pins"),
 
     ("version-pinned apt package",
@@ -87,7 +87,7 @@ MUTATIONS: list[tuple[str, callable, "str | None"]] = [
      "verifier-image"),
 
     ("verifier image missing mandated pin",
-     lambda d: patch(d / "tests" / "Dockerfile", "pytest==9.1.1", "pytest==9.0.0"),
+     lambda d: patch(d / "tests" / "Dockerfile", "pytest==8.4.1", "pytest==8.0.0"),
      "verifier-image"),
 
     ("artifact never named in instruction",
@@ -161,6 +161,46 @@ MUTATIONS: list[tuple[str, callable, "str | None"]] = [
     ("missing required metadata field",
      lambda d: patch(d / "task.toml", "relevant_experience = \"\"", ""),
      "metadata"),
+
+    ("conflicts_of_interest key removed",
+     lambda d: patch(d / "task.toml", 'conflicts_of_interest = ""', ""),
+     "metadata"),
+
+    ("author_organization key removed",
+     lambda d: patch(d / "task.toml", 'author_organization = ""', ""),
+     "metadata"),
+
+    ("category changed away from Science",
+     lambda d: patch(d / "task.toml", 'category = "Science"', 'category = "ML"'),
+     "metadata"),
+
+    ("subcategory not a Science label",
+     lambda d: patch(d / "task.toml", 'subcategory = "Biology"',
+                     'subcategory = "Frontend"'),
+     "metadata"),
+
+    ("agent network not public",
+     lambda d: patch(d / "task.toml", 'network_mode = "public"',
+                     'network_mode = "no-network"'),
+     "environment"),
+
+    ("verifier network not sealed",
+     lambda d: patch(d / "task.toml", 'network_mode = "no-network"',
+                     'network_mode = "public"'),
+     "verifier"),
+
+    ("timeout above the 28800 ceiling",
+     lambda d: patch(d / "task.toml", "timeout_sec = 9000.0",
+                     "timeout_sec = 30000.0"),
+     "agent"),
+
+    ("stray file at the bundle root",
+     lambda d: (d / "notes.txt").write_text("scratch\n", encoding="utf-8"),
+     "layout"),
+
+    ("cheat attempts left at the root instead of authoring/",
+     lambda d: (d / "cheat").mkdir(),
+     "layout"),
 
     ("subfield key removed",
      lambda d: patch(d / "task.toml", 'subfield = ""', ""),
