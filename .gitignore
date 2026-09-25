@@ -1,0 +1,22 @@
+# Submission zips and other generated output
+build/
+*.zip
+
+# Harbor run output
+.harbor/
+logs/
+runs/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp

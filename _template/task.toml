@@ -1,0 +1,63 @@
+# Kepler task configuration.
+#
+# Every [metadata] field below is REQUIRED. Reviewers read the three
+# *_explanation fields and relevant_experience first; generic text there fails
+# review.
+#
+# `artifacts` must stay above the first [section]. It lists the absolute paths
+# harbor copies out of the agent's container for the verifier. Nothing else the
+# agent wrote survives. Every path here must also be named in instruction.md,
+# and its parent directory must be `mkdir -p`'d in tests/Dockerfile.
+artifacts = ["/app/output.json"]
+
+[task]
+# Must be "afterquery/<slug>", where <slug> equals the directory name and the
+# task name submitted on the platform: lowercase, at most 3 hyphen-separated
+# words.
+name = "afterquery/UNSET-slug"
+
+[metadata]
+author_name = ""
+author_email = ""
+# Why this is hard for agents AND for humans. Name the specific failure mode
+# the task targets — the invariant that gets broken, the race that is invisible,
+# the rule that has to be inferred rather than read.
+difficulty_explanation = ""
+# High-level approach and the key insights a solver needs.
+solution_explanation = ""
+# How tests establish correctness, and why the result cannot be faked.
+verification_explanation = ""
+# One of: Science, Software, ML, Operations, Security, Hardware, Media.
+# This repo is Life Sciences scope -> always "Science".
+category = "Science"
+# Subdomain label. Life Sciences -> "Biology".
+subcategory = "Biology"
+tags = []                         # e.g. ["genomics", "python"]
+# Best-case hours for a focused domain expert. Be honest; it calibrates review.
+expert_time_estimate_hours = 0
+# WRITTEN BY THE REPO OWNER, NOT BY AI. Must describe actual professional
+# background in this domain. Generic statements fail review.
+relevant_experience = ""
+
+[verifier]
+# Raise this to comfortably exceed the test suite's runtime (max 18000).
+timeout_sec = 120.0
+# Required by Kepler: the verifier runs in its own container, built from
+# tests/Dockerfile, after the agent's container is torn down.
+environment_mode = "separate"
+
+[agent]
+# Minimum 9000 (2.5h), maximum 18000. Time the oracle run, then give the agent
+# several times that. Do not leave this at the template value by accident.
+timeout_sec = 9000.0
+
+[environment]
+build_timeout_sec = 600.0
+cpus = 1                          # 1 / 2 / 4 / 8 / 16 only
+memory_mb = 2048                  # 1024 / 2048 / 4096 / 8192 / 16384 only
+storage_mb = 10240                # max 40960
+gpus = 0                          # stays 0 for Science/Biology tasks
+# gpu_types = ["H100"]            # only for a GPU-option ML task
+#
+# Do NOT add allow_internet with either value. Harbor's open-internet default
+# is the policy, and setting it fails the structure check.
