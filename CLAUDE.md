@@ -11,15 +11,22 @@ bundle — instruction, containerized environment, reference solution, sealed
 verifier — designed so that frontier AI agents fail at it for legitimate
 reasons. Tasks are submitted one zip at a time.
 
-Platform guidance is vendored verbatim at `docs/kepler-instructions.md`.
-**Do not edit that file.** It is kept unaltered so it stays trustworthy as a
-reference.
+Three specs are vendored, in order of authority. **Do not edit any of them** —
+they are kept verbatim so they stay trustworthy.
 
-**Where it disagrees with the submit form's REQUIRED LAYOUT panel, the form
-wins.** That panel is collapsed by default and is more specific than the
-general guidance; expanding it corrected the verifier pin versions, the timeout
-ceiling, several required `[metadata]` keys, the network settings and the
-bundle root rule. `tools/structure-check.py` encodes the form's version.
+1. **`docs/kepler-science-task-template.md`** — the Kepler Science Task
+   Template. The owner's work is **specific, not general**, so this is the
+   template for every task here.
+2. **The submit form's REQUIRED LAYOUT panel** (collapsed by default) — the
+   gate that actually runs at submit.
+3. **`docs/kepler-instructions.md`** — written for the *general* dataset.
+   Least authoritative where the other two speak.
+
+They are **not consistent**, and two of the disagreements would fail a
+submission outright — the canary GUID and the `[task].name` prefix.
+`docs/template-conflicts.md` records every one of them, which side the bundle
+currently takes, and why. Read it before changing anything the specs touch, and
+never resolve a conflict silently.
 
 It defines the authoring workflow, the bundle structure and the validation
 requirements. It does **not** define this repo's subject scope — that is set by

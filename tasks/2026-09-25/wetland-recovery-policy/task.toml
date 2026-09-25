@@ -3,6 +3,8 @@
 # Values marked OWNER must be supplied by the repo owner: they are factual
 # claims about a person, or a measurement nobody has taken yet. They are left
 # empty rather than invented, and the structure check fails while they are.
+schema_version = "1.4"
+
 artifacts = [
     "/app/output/posterior.json",
     "/app/output/policy.json",
@@ -12,6 +14,9 @@ artifacts = [
 [task]
 name = "afterquery/wetland-recovery-policy"
 description = "Choose a six-year wetland restoration and survey policy from a detection-screened monitoring archive, robust across three unobserved climate futures."
+# OWNER: name and email, same values as [metadata].
+authors = []
+keywords = ["metapopulation ecology", "occupancy modelling", "robust optimization"]
 
 [metadata]
 # --- OWNER: identity and declarations -------------------------------------
@@ -73,9 +78,14 @@ alternative calculations from scientifically wrong models, plus two acceptances.
 # --- classification --------------------------------------------------------
 category = "Science"
 subcategory = "Biology"
-# OWNER: read the exact slugs off the submit form. Display names are
-# "Life Sciences" and "Ecology & Evolutionary Biology".
-domain = "TODO-domain-slug"
+# Enumerated in docs/kepler-science-task-template.md, so this is transcribed
+# from the spec rather than guessed.
+domain = "life-sciences"
+# OWNER: the template leaves field as a free placeholder and does not enumerate
+# it, so read the exact value off the submit form, which displays it as
+# "Ecology & Evolutionary Biology". Given domain is a lowercase hyphenated
+# slug, "ecology-evolutionary-biology" is the obvious parallel, but that is an
+# inference and the form is the authority.
 field = "TODO-field-slug"
 subfield = "metapopulation ecology and conservation decision analysis"
 
