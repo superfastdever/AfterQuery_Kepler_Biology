@@ -1,0 +1,102 @@
+{
+  "optimum": 0.9019740026356562,
+  "best_initial_choice": "4-intensive",
+  "gate_tolerances": {
+    "numeric_abs": 1e-06,
+    "optimality_abs": 1e-05
+  },
+  "routes": {
+    "full reference": {
+      "posterior_max_abs": 0.0,
+      "audit_max_abs": 0.0,
+      "worst_risk": 0.9019740026356562,
+      "optimality_gap": 0.0,
+      "gate_posterior": "pass",
+      "gate_audit": "pass",
+      "gate_optimality": "pass",
+      "verdict": "ACCEPT",
+      "reason": ""
+    },
+    "per-patch survey weather": {
+      "posterior_max_abs": 0.018773177230380245,
+      "audit_max_abs": 0.002201736995441572,
+      "worst_risk": 0.9041138928872308,
+      "optimality_gap": 0.002139890251574572,
+      "gate_posterior": "FAIL",
+      "gate_audit": "FAIL",
+      "gate_optimality": "FAIL",
+      "verdict": "REJECT",
+      "reason": "ValueError: Scientific numeric mismatch"
+    },
+    "factorized destination occupancy": {
+      "posterior_max_abs": 0.032164317935868394,
+      "audit_max_abs": 0.03701764805148422,
+      "worst_risk": 0.8591042098430665,
+      "optimality_gap": -0.042869792792589734,
+      "gate_posterior": "FAIL",
+      "gate_audit": "FAIL",
+      "gate_optimality": "pass",
+      "verdict": "REJECT",
+      "reason": "ValueError: Scientific numeric mismatch"
+    },
+    "terminal emptiness, not sustained collapse": {
+      "posterior_max_abs": 1.7763568394002505e-15,
+      "audit_max_abs": 0.09224583725725477,
+      "worst_risk": 0.7995253864178475,
+      "optimality_gap": -0.10244861621780865,
+      "gate_posterior": "pass",
+      "gate_audit": "FAIL",
+      "gate_optimality": "pass",
+      "verdict": "REJECT",
+      "reason": "ValueError: Scientific numeric mismatch"
+    },
+    "no archive retention correction": {
+      "posterior_max_abs": 0.17516963577940772,
+      "audit_max_abs": 0.0,
+      "worst_risk": 0.9019740026356562,
+      "optimality_gap": 0.0,
+      "gate_posterior": "FAIL",
+      "gate_audit": "pass",
+      "gate_optimality": "pass",
+      "verdict": "REJECT",
+      "reason": "ValueError: Scientific numeric mismatch",
+      "posterior_L1": 0.4537731281522022
+    },
+    "worst case within each branch": {
+      "posterior_max_abs": 0.0,
+      "audit_max_abs": 0.0,
+      "worst_risk": 0.9022479734686326,
+      "optimality_gap": 0.00027397083297642233,
+      "gate_posterior": "pass",
+      "gate_audit": "pass",
+      "gate_optimality": "FAIL",
+      "verdict": "REJECT",
+      "reason": "ValueError: Policy is outside optimality tolerance"
+    },
+    "scenario-specific (clairvoyant)": {
+      "worst_risk": 0.9017235726960916,
+      "optimality_gap": -0.00025042993956458925,
+      "gate_posterior": "n/a",
+      "gate_audit": "n/a",
+      "gate_optimality": "n/a",
+      "verdict": "NOT SUBMITTABLE",
+      "reason": "requires one action table per scenario; the manager never learns the scenario",
+      "per_scenario_risk": [
+        0.9017235726960916,
+        0.9015619206882339,
+        0.8944440436353104
+      ]
+    },
+    "naive: no second-stage restoration": {
+      "posterior_max_abs": 0.0,
+      "audit_max_abs": 0.0,
+      "worst_risk": 0.9142865891150225,
+      "optimality_gap": 0.012312586479366283,
+      "gate_posterior": "pass",
+      "gate_audit": "pass",
+      "gate_optimality": "FAIL",
+      "verdict": "REJECT",
+      "reason": "ValueError: Policy is outside optimality tolerance"
+    }
+  }
+}
